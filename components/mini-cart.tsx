@@ -28,23 +28,25 @@ export function MiniCart() {
   const currentShipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE
   const finalTotal = subtotal + currentShipping
 
-  // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
+    // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
   const handleCheckout = () => {
+    // 改用逗號或斜線隔開，避免換行符號導致 Tally 短文字框讀取失敗
     const itemsDescription = items
       .map(
         (item) =>
-          `• ${item.product.name} (${item.product.subtitle}) / 印色: ${item.color} / 尺寸: ${item.size} x ${item.quantity} 件`
+          `${item.product.name} (${item.product.subtitle}) / ${item.color} / ${item.size} x ${item.quantity}`
       )
-      .join('\n')
+      .join(' ； ')
 
     const params = new URLSearchParams()
-    // 自動帶入 Tally 題目
+    // 必須與 Tally 題目文字完全一致
     params.set('訂購明細', itemsDescription)
-    params.set('應付總金額', `NT$ ${finalTotal.toLocaleString()} (含運費 NT$ ${currentShipping})`)
+    params.set('應付總金額（含運費 $50）', `NT$ ${finalTotal.toLocaleString()} 元`)
 
     const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
     window.open(tallyUrl, '_blank')
   }
+
 
   return (
     <AnimatePresence>
