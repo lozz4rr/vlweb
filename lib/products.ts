@@ -38,7 +38,7 @@ export const products: Product[] = [
     description:
       'Retro American graphic tee featuring the Paiwan hundred-pacer snake (Vulung) — guardian of ancestors and the land we come from.',
     graphics: ['vulung'],
-    images: { front: '/images/vulung-front.png', back: '/images/vulung-back.png' },
+    images: { front: '/images/product-1.png', back: '/images/product-1.png' },
     releasedAt: '2026-09-20',
     sold: 412,
     isNew: true,
