@@ -45,7 +45,6 @@ export function MiniCart() {
 
     const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
     window.open(tallyUrl, '_blank')
-    window.open(tallyUrl, '_blank')
   }
 
 
