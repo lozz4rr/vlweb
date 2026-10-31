@@ -29,21 +29,19 @@ export function MiniCart() {
   const finalTotal = subtotal + currentShipping
 
     // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
+    // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
   const handleCheckout = () => {
-    // 改用逗號或斜線隔開，避免換行符號導致 Tally 短文字框讀取失敗
+    // 移除所有特殊符號（冒號、括號、分號），只留最單純的文字與空格
     const itemsDescription = items
-      .map(
-        (item) =>
-          `${item.product.name} (${item.product.subtitle}) / ${item.color} / ${item.size} x ${item.quantity}`
-      )
-      .join(' ； ')
+      .map((item) => `${item.product.name} ${item.color} ${item.size} x${item.quantity}`)
+      .join(' / ')
 
-        const params = new URLSearchParams()
-    // 兩邊都是乾淨的純中文，沒有括號問題
-    params.set('訂購明細', itemsDescription)
-    params.set('應付總金額', `NT$ ${finalTotal.toLocaleString()} 元 (含超商運費 NT$ ${currentShipping})`)
+    const totalText = `${finalTotal}元`
 
-    const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
+    // 手動組裝標準 URI 編碼
+    const query = `訂購明細=${encodeURIComponent(itemsDescription)}&應付總金額=${encodeURIComponent(totalText)}`
+    const tallyUrl = `https://tally.so/r/o9EMxN?${query}`
+
     window.open(tallyUrl, '_blank')
   }
 
