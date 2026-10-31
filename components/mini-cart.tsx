@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, Minus, Plus, X } from 'lucide-react'
+import { Check, Copy, Minus, Plus, X } from 'lucide-react'
 import { useCart } from '@/components/cart-context'
 import { formatPrice } from '@/lib/products'
 
@@ -11,6 +11,19 @@ const FREE_SHIPPING_THRESHOLD = 2000
 
 export function MiniCart() {
   const { items, isOpen, closeCart, subtotal, count, lastAddedKey, updateQuantity, removeItem } = useCart()
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const BANK_INFO = {
+    bankName: '台新國際商業銀行 (812)',
+    accountNumber: '0028881024504612',
+  }
+
+  const handleCopyAccount = () => {
+    navigator.clipboard.writeText(BANK_INFO.accountNumber)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => {
     if (!isOpen) return
@@ -35,7 +48,10 @@ export function MiniCart() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            onClick={closeCart}
+            onClick={() => {
+              setShowCheckout(false)
+              closeCart()
+            }}
             aria-hidden
           />
           <motion.aside
@@ -54,7 +70,10 @@ export function MiniCart() {
               </h2>
               <button
                 type="button"
-                onClick={closeCart}
+                onClick={() => {
+                  setShowCheckout(false)
+                  closeCart()
+                }}
                 className="flex size-9 items-center justify-center"
                 aria-label="Close bag"
                 autoFocus
@@ -175,6 +194,7 @@ export function MiniCart() {
                   </div>
                   <button
                     type="button"
+                    onClick={() => setShowCheckout(true)}
                     className="w-full bg-ink py-4 text-xs font-medium tracking-[0.25em] text-cream transition-colors duration-500 hover:bg-burgundy"
                   >
                     CHECKOUT →
@@ -190,6 +210,84 @@ export function MiniCart() {
               </>
             )}
           </motion.aside>
+
+          {/* 匯款資訊彈窗 (Modal) */}
+          <AnimatePresence>
+            {showCheckout && (
+              <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setShowCheckout(false)}
+                  className="fixed inset-0 bg-ink/60 backdrop-blur-sm"
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 16 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className="relative z-10 w-full max-w-md rounded-none border border-border bg-cream p-6 text-ink shadow-2xl"
+                >
+                  <div className="flex items-center justify-between border-b border-border pb-4">
+                    <h3 className="font-display text-xl font-bold tracking-wide">
+                      PAYMENT DETAILS <span className="font-serif-tc text-sm font-normal text-muted-foreground">/ 匯款資訊</span>
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => setShowCheckout(false)}
+                      className="text-muted-foreground hover:text-ink"
+                    >
+                      <X className="size-5" />
+                    </button>
+                  </div>
+
+                  <div className="my-5 space-y-3 border border-border bg-secondary/30 p-4 font-mono text-sm">
+                    <div className="flex justify-between">
+                      <span className="font-serif-tc text-muted-foreground">應付總額</span>
+                      <span className="font-bold text-burgundy">{formatPrice(subtotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-serif-tc text-muted-foreground">銀行名稱</span>
+                      <span>{BANK_INFO.bankName}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-serif-tc text-muted-foreground">匯款帳號</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold tracking-wider">{BANK_INFO.accountNumber}</span>
+                        <button
+                          type="button"
+                          onClick={handleCopyAccount}
+                          className="rounded border border-border p-1 hover:bg-cream"
+                          title="複製帳號"
+                        >
+                          {copied ? <Check className="size-3 text-burgundy" /> : <Copy className="size-3" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 border-l-2 border-burgundy pl-3 text-xs text-muted-foreground font-serif-tc">
+                    <p className="font-semibold text-ink">✦ 匯款後回報方式：</p>
+                    <p>請將「訂單明細截圖」及「匯款帳號末 5 碼」私訊官方 Instagram 或 Email，核對款項後將立即為您安排出貨。</p>
+                  </div>
+
+                  <div className="mt-6 flex flex-col gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowCheckout(false)
+                        closeCart()
+                      }}
+                      className="w-full bg-ink py-3 text-xs font-medium tracking-[0.2em] text-cream hover:bg-burgundy transition-colors"
+                    >
+                      我已了解，完成訂購
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </AnimatePresence>
