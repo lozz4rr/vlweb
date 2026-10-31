@@ -28,25 +28,23 @@ export function MiniCart() {
   const currentShipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE
   const finalTotal = subtotal + currentShipping
 
-    // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
-    // 點擊結帳：將購物車品項與金額打包傳遞至 Tally 表單
+     // 點擊結帳：將動態品項與即時計算金額傳遞至 Tally 隱藏欄位
   const handleCheckout = () => {
-    // 移除所有特殊符號（冒號、括號、分號），只留最單純的文字與空格
     const itemsDescription = items
-      .map((item) => `${item.product.name} ${item.color} ${item.size} x${item.quantity}`)
-      .join(' / ')
+      .map((item) => `${item.product.name} (${item.color}/${item.size}) x${item.quantity}`)
+      .join(' ; ')
 
-    const totalText = `${finalTotal}元`
+    // 依購物車實際金額動態計算（含超商運費）
+    const totalAmount = `NT$ ${finalTotal.toLocaleString()}`
 
-    // 手動組裝標準 URI 編碼
-    const query = `訂購明細=${encodeURIComponent(itemsDescription)}&應付總金額=${encodeURIComponent(totalText)}`
-    const tallyUrl = `https://tally.so/r/o9EMxN?${query}`
+    const params = new URLSearchParams()
+    params.set('items', itemsDescription)
+    params.set('total', totalAmount)
 
+    const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
     window.open(tallyUrl, '_blank')
   }
 
-
-  return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex justify-end">
