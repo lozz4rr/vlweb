@@ -38,12 +38,13 @@ export function MiniCart() {
       )
       .join(' ； ')
 
-    const params = new URLSearchParams()
-    // 必須與 Tally 題目文字完全一致
+        const params = new URLSearchParams()
+    // 兩邊都是乾淨的純中文，沒有括號問題
     params.set('訂購明細', itemsDescription)
-    params.set('應付總金額（含運費 $50）', `NT$ ${finalTotal.toLocaleString()} 元`)
+    params.set('應付總金額', `NT$ ${finalTotal.toLocaleString()} 元 (含超商運費 NT$ ${currentShipping})`)
 
     const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
+    window.open(tallyUrl, '_blank')
     window.open(tallyUrl, '_blank')
   }
 
