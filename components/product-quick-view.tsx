@@ -16,13 +16,23 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
   if (!product) return null
 
-  // 取得商品圖片（白色為 front，黑色為 back 或自帶圖）
+  // 精準相容各種商品圖片資料結構，避免破圖
   const getImageSrc = () => {
-    if (selectedColor === 'black' && product.images?.back) {
-      return product.images.back
+    const anyProd = product as any
+    if (selectedColor === 'black') {
+      if (anyProd.images?.black) return anyProd.images.black
+      if (anyProd.images?.back) return anyProd.images.back
+    } else {
+      if (anyProd.images?.white) return anyProd.images.white
+      if (anyProd.images?.front) return anyProd.images.front
     }
-    return product.images?.front || (product as any).image || ''
+    if (typeof anyProd.images === 'string') return anyProd.images
+    if (anyProd.image) return anyProd.image
+    if (anyProd.images?.front) return anyProd.images.front
+    return ''
   }
+
+  const currentImage = getImageSrc()
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
@@ -39,66 +49,73 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
         {/* 左側：商品大圖 */}
         <div className="relative aspect-square w-full bg-[#e8e0d2] md:w-1/2">
-          <Image
-            src={getImageSrc()}
-            alt={product.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-          />
+          {currentImage ? (
+            <Image
+              src={currentImage}
+              alt={product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-mono text-xs text-[#1e1c1a]/40">
+              NO IMAGE
+            </div>
+          )}
         </div>
 
         {/* 右側：商品說明與選項 */}
-        <div className="flex w-full flex-col justify-between overflow-y-auto p-6 md:w-1/2 md:p-10">
+        <div className="flex w-full flex-col justify-between overflow-y-auto p-6 md:w-1/2 md:p-8">
           <div>
-            {/* 標題與副標（宋體 / 明體） */}
-            <div className="font-serif">
+            {/* 標題與副標 */}
+            <div>
               <h2 className="text-3xl font-bold tracking-tight text-[#1a1715] md:text-4xl">
-                <span>vulung</span>
-                <span className="mx-1.5 font-light text-[#1a1715]/40">／</span>
-                <span>百步蛇</span>
+                <span className="font-serif italic font-medium">vulung</span>
+                <span className="mx-1 font-light text-[#1a1715]/40 font-sans">／</span>
+                <span style={{ fontFamily: '"Noto Serif TC", "Songti TC", serif' }} className="font-bold">
+                  百步蛇
+                </span>
               </h2>
-              <p className="mt-1 text-xs tracking-wider text-[#1a1715]/60">
+              <p className="mt-1 text-xs tracking-wider text-[#1a1715]/60 font-sans">
                 百步蛇與太陽
               </p>
             </div>
 
             {/* 價格與預購折扣標籤 */}
             <div className="mt-4 flex items-center gap-3">
-              <span className="font-mono text-2xl font-extrabold tracking-tight text-[#1a1715]">
+              <span className="font-mono text-2xl font-black text-[#1a1715]">
                 NT$ 680
               </span>
-              <span className="font-mono text-sm text-[#1a1715]/40 line-through">
+              <span className="font-mono text-xs text-[#1a1715]/40 line-through">
                 NT$ 750
               </span>
-              <span className="rounded bg-[#e8d3cb] px-2 py-0.5 font-serif text-[11px] font-medium text-[#7a3528]">
+              <span className="rounded bg-[#e8d3cb] px-2 py-0.5 text-[11px] font-medium text-[#7a3528] font-sans">
                 預購折扣
               </span>
             </div>
 
-            {/* 文化理念介紹 */}
-            <div className="mt-6 space-y-3 font-serif text-xs leading-relaxed text-[#2c2825]">
-              <p>
+            {/* 文化理念介紹（完全還原截圖的細黑體與斜體英文） */}
+            <div className="mt-6 space-y-3 font-sans text-xs leading-relaxed text-[#2c2825]">
+              <p className="font-normal text-[#2c2825]/90">
                 取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。
                 <br />
                 讓來自根源的故事走進日常，繼續被看見。
               </p>
-              <p className="italic text-[#2c2825]/70">
+              <p className="italic text-[#2c2825]/60 font-light text-[11px] leading-normal">
                 Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from roots into everyday life, so they continue to be seen.
               </p>
             </div>
 
-            {/* 衣服顏色切換區（被音量遮住的部分） */}
+            {/* 衣服顏色切換區 */}
             <div className="mt-8 border-t border-[#1a1715]/10 pt-5">
-              <div className="flex items-center justify-between font-serif text-xs">
+              <div className="flex items-center justify-between text-xs font-sans">
                 <span className="text-[#1a1715]/80">衣服顏色</span>
-                <span className="font-serif text-xs text-[#1a1715]/80">
+                <span className="text-xs text-[#1a1715]/80">
                   {selectedColor === 'white' ? 'White 白' : 'Black 黑'}
                 </span>
               </div>
               <div className="mt-3 flex gap-3">
-                {/* 白底圓圈 */}
                 <button
                   type="button"
                   onClick={() => setSelectedColor('white')}
@@ -109,7 +126,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                   }`}
                   aria-label="White 白"
                 />
-                {/* 黑底圓圈 */}
                 <button
                   type="button"
                   onClick={() => setSelectedColor('black')}
@@ -148,7 +164,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
           </div>
 
           {/* 預購按鈕 */}
-          <div className="mt-8 pt-4">
+          <div className="mt-8 pt-2">
             <button
               type="button"
               onClick={() => {
