@@ -57,8 +57,6 @@ export function NewDrop() {
             NEW DROP
           </h2>
           <p className="mt-3 font-serif text-xl italic text-muted-foreground">
-            Two tees. Two stories. <span className="font-serif-tc not-italic text-base">兩件T恤，兩個故事。</span>
-          </p>
         </motion.div>
 
         <label className="flex items-center gap-3 text-xs tracking-[0.2em]">
