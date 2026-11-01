@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 :root {
+  /* 經典溫潤米白底色 */
   --cream: #efe8da;
-  --ink: #1e1c1a;
-  --border: rgba(30, 28, 26, 0.15);
-  --muted-foreground: rgba(30, 28, 26, 0.65);
+
+  /* 復古深烘焙咖啡色（取代原本的死黑，溫潤沉穩） */
+  --ink: #2b211b;
+
+  /* 咖啡色系半透明線條與次要文字 */
+  --border: rgba(43, 33, 27, 0.15);
+  --muted-foreground: rgba(43, 33, 27, 0.65);
 }
 
 body {
