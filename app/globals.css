@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+TC:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@400;700;900&family=Noto+Serif+TC:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 @theme {
   --color-cream: #efe8da;
@@ -8,6 +8,7 @@
   --font-serif-en: "Playfair Display", "Times New Roman", serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
   --font-mono: "Space Mono", monospace;
+  --font-display: "Anton", Impact, -apple-system, sans-serif;
 }
 
 :root {
@@ -21,4 +22,10 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 確保底部的超大品牌字永遠維持飽滿、剛硬的視覺風格 */
+.font-display {
+  font-family: var(--font-display) !important;
+  letter-spacing: -0.04em;
 }
