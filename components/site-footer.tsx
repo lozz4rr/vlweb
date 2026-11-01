@@ -80,7 +80,7 @@ export function SiteFooter() {
               <h3 className="mt-2 font-display text-xl font-extrabold uppercase tracking-tight text-cream sm:text-2xl">
                 MADE TODAY. TRADITION TOMORROW.
               </h3>
-              <p className="mt-2 font-serif text-sm tracking-widest text-cream/70">
+              <p className="mt-2 text-sm tracking-widest text-cream/70">
                 現代的創作就是未來的傳統
               </p>
             </div>
