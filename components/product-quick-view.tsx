@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
-import type { Product } from '@/lib/products'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Check, X } from 'lucide-react'
+import { useCart } from '@/components/cart-context'
+import { formatPrice, type Product, type ProductColor } from '@/lib/products'
+import { cn } from '@/lib/utils'
 
 interface ProductQuickViewProps {
   product: Product | null
@@ -11,199 +14,209 @@ interface ProductQuickViewProps {
 }
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
-  const [selectedColor, setSelectedColor] = useState<'white' | 'black'>('black')
+  const { addItem } = useCart()
+  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null)
   const [selectedSize, setSelectedSize] = useState<string>('M')
+  const [activeSide, setActiveSide] = useState<'front' | 'back'>('front')
+  const [added, setAdded] = useState(false)
 
-  if (!product) return null
-
-  // 取得商品圖片
-  const getImageSrc = () => {
-    const anyProd = product as any
-    if (selectedColor === 'black') {
-      if (anyProd.images?.black) return anyProd.images.black
-      if (anyProd.images?.back) return anyProd.images.back
-    } else {
-      if (anyProd.images?.white) return anyProd.images.white
-      if (anyProd.images?.front) return anyProd.images.front
+  useEffect(() => {
+    if (product) {
+      setSelectedColor(product.colors[0] ?? null)
+      setSelectedSize(product.sizes[1] ?? product.sizes[0] ?? 'M')
+      setActiveSide('front')
+      setAdded(false)
     }
-    if (typeof anyProd.images === 'string') return anyProd.images
-    if (anyProd.image) return anyProd.image
-    if (anyProd.images?.front) return anyProd.images.front
-    return ''
+  }, [product])
+
+  useEffect(() => {
+    if (!product) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [product, onClose])
+
+  if (!product || !selectedColor) return null
+
+  const currentImage = product.images[activeSide] || product.images.front
+
+  const handleAddToCart = () => {
+    addItem(product, selectedColor.name, selectedSize)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
   }
 
-  const currentImage = getImageSrc()
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-none border border-[#1e1c1a]/10 bg-[#f2ede4] shadow-2xl md:flex-row">
-        {/* 關閉按鈕 */}
-        <button
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           onClick={onClose}
-          type="button"
-          className="absolute right-4 top-4 z-20 text-[#1e1c1a]/50 transition-colors hover:text-[#1e1c1a]"
-          aria-label="Close"
-        >
-          <X className="h-5 w-5" />
-        </button>
+        />
 
-        {/* 左側：商品大圖 */}
-        <div className="relative aspect-square w-full bg-[#e8e0d2] md:w-1/2">
-          {currentImage ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 16 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-none bg-cream text-ink shadow-2xl md:flex-row"
+        >
+          {/* 關閉按鈕 */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute right-4 top-4 z-20 flex size-9 items-center justify-center rounded-full bg-cream/80 text-ink backdrop-blur-sm transition-opacity hover:opacity-70"
+            aria-label="Close"
+          >
+            <X className="size-5" />
+          </button>
+
+          {/* 圖片預覽區 */}
+          <div className="relative aspect-square w-full shrink-0 bg-secondary md:w-1/2">
             <Image
               src={currentImage}
               alt={product.name}
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover transition-opacity duration-300"
               priority
             />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center font-mono text-xs text-[#1e1c1a]/40">
-              NO IMAGE
-            </div>
-          )}
-        </div>
+            {product.images.back && product.images.back !== product.images.front && (
+              <div className="absolute bottom-4 left-4 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveSide('front')}
+                  className={cn(
+                    'px-3 py-1 text-[11px] font-medium tracking-widest transition-colors',
+                    activeSide === 'front' ? 'bg-ink text-cream' : 'bg-cream/80 text-ink hover:bg-cream',
+                  )}
+                >
+                  FRONT
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveSide('back')}
+                  className={cn(
+                    'px-3 py-1 text-[11px] font-medium tracking-widest transition-colors',
+                    activeSide === 'back' ? 'bg-ink text-cream' : 'bg-cream/80 text-ink hover:bg-cream',
+                  )}
+                >
+                  BACK
+                </button>
+              </div>
+            )}
+          </div>
 
-        {/* 右側：商品說明與選項 */}
-        <div className="flex w-full flex-col justify-between overflow-y-auto p-6 md:w-1/2 md:p-8">
-          <div>
-            {/* 標題與副標 */}
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-[#1a1715] md:text-4xl">
-                <span className="font-serif italic font-medium">vulung</span>
-                <span className="mx-1 font-light text-[#1a1715]/40 font-sans">／</span>
-                <span style={{ fontFamily: '"Noto Serif TC", "Songti TC", serif' }} className="font-bold">
-                  百步蛇
+          {/* 內容設定區 */}
+          <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
+            {/* 標題：採用 font-serif-tc 並加強為 font-bold (700 粗體) */}
+            <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
+              {product.name}
+            </h2>
+            <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
+
+            {/* 價格區塊 */}
+            <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
+              <span className="font-display text-3xl font-bold text-ink">
+                {formatPrice(product.price)}
+              </span>
+              {product.originalPrice && (
+                <span className="font-display text-base text-muted-foreground line-through">
+                  {formatPrice(product.originalPrice)}
                 </span>
-              </h2>
-              <p className="mt-1 text-xs tracking-wider text-[#1a1715]/60 font-sans">
-                百步蛇與太陽
-              </p>
-            </div>
-
-            {/* 價格與預購折扣標籤 */}
-            <div className="mt-4 flex items-center gap-3">
-              <span className="font-mono text-2xl font-black text-[#1a1715]">
-                NT$ 680
-              </span>
-              <span className="font-mono text-xs text-[#1a1715]/40 line-through">
-                NT$ 750
-              </span>
-              <span className="rounded bg-[#e8d3cb] px-2 py-0.5 text-[11px] font-medium text-[#7a3528] font-sans">
+              )}
+              <span className="rounded bg-burgundy/10 px-2.5 py-0.5 text-xs font-semibold tracking-wider text-burgundy">
                 預購折扣
               </span>
             </div>
 
-            {/* ========================================================
-                ▼ 按照截圖 1:1 還原的商品說明（包含字級、行距、顏色、斜體）▼
-               ======================================================== */}
-            <div className="mt-6 space-y-4">
-              {/* 中文：極細、灰褐色、高行距 */}
-              <p
-                style={{
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif',
-                  color: '#4a453e',
-                  fontSize: '13px',
-                  lineHeight: '1.75',
-                  letterSpacing: '0.04em',
-                  fontWeight: 300,
-                }}
-              >
-                取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。
-                <br />
-                讓來自根源的故事走進日常，繼續被看見。
-              </p>
-
-              {/* 英文：細長襯線斜體、淡灰褐色 */}
-              <p
-                style={{
-                  fontFamily: '"Playfair Display", "Times New Roman", Georgia, serif',
-                  color: '#756f66',
-                  fontSize: '12.5px',
-                  lineHeight: '1.65',
-                  fontStyle: 'italic',
-                  fontWeight: 400,
-                }}
-              >
-                Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from roots into everyday life, so they continue to be seen.
-              </p>
+            {/* 說明文案：思源宋體 */}
+            <div className="py-5 font-serif-tc text-[15px] leading-relaxed text-ink/85 whitespace-pre-line">
+              {product.description}
             </div>
-            {/* ========================================================
-                ▲ 商品說明區塊結束 ▲
-               ======================================================== */}
 
-            {/* 衣服顏色切換區 */}
-            <div className="mt-8 border-t border-[#1a1715]/10 pt-5">
-              <div className="flex items-center justify-between text-xs font-sans">
-                <span className="text-[#1a1715]/80">衣服顏色</span>
-                <span className="text-xs text-[#1a1715]/80">
-                  {selectedColor === 'white' ? 'White 白' : 'Black 黑'}
-                </span>
+            {/* 顏色選項 */}
+            <div className="border-t border-border/60 py-4">
+              <div className="flex items-center justify-between text-xs tracking-[0.2em]">
+                <span className="font-medium">COLOR 衣服顏色</span>
+                <span className="text-muted-foreground">{selectedColor.name}</span>
               </div>
-              <div className="mt-3 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedColor('white')}
-                  className={`h-7 w-7 rounded-full border-2 bg-white transition-all ${
-                    selectedColor === 'white'
-                      ? 'border-[#1a1715] scale-110 shadow-sm'
-                      : 'border-black/20 hover:scale-105'
-                  }`}
-                  aria-label="White 白"
-                />
-                <button
-                  type="button"
-                  onClick={() => setSelectedColor('black')}
-                  className={`h-7 w-7 rounded-full border-2 bg-[#181818] transition-all ${
-                    selectedColor === 'black'
-                      ? 'border-[#1a1715] scale-110 shadow-sm'
-                      : 'border-black/20 hover:scale-105'
-                  }`}
-                  aria-label="Black 黑"
-                />
+              <div className="mt-3 flex gap-2">
+                {product.colors.map((color) => {
+                  const active = color.name === selectedColor.name
+                  return (
+                    <button
+                      key={color.name}
+                      type="button"
+                      onClick={() => setSelectedColor(color)}
+                      aria-label={color.name}
+                      className={cn(
+                        'size-7 rounded-full border border-border transition-all',
+                        active && 'ring-2 ring-ink ring-offset-2',
+                      )}
+                      style={{ backgroundColor: color.hex }}
+                    />
+                  )
+                })}
               </div>
             </div>
 
-            {/* 尺寸選擇 */}
-            <div className="mt-5">
-              <div className="mb-2 text-right font-mono text-xs text-[#1a1715]">
-                {selectedSize}
+            {/* 尺寸選項 */}
+            <div className="border-t border-border/60 py-4">
+              <div className="flex items-center justify-between text-xs tracking-[0.2em]">
+                <span className="font-medium">SIZE 尺寸</span>
+                <span className="text-muted-foreground">{selectedSize}</span>
               </div>
-              <div className="grid grid-cols-4 gap-2">
-                {['S', 'M', 'L', 'XL'].map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    onClick={() => setSelectedSize(size)}
-                    className={`flex h-9 items-center justify-center font-mono text-xs transition-colors ${
-                      selectedSize === size
-                        ? 'bg-[#181614] text-[#f2ede4] font-bold'
-                        : 'border border-[#1a1715]/15 bg-[#ece6db]/60 text-[#1a1715] hover:border-[#1a1715]/40'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+              <div className="mt-3 grid grid-cols-4 gap-2">
+                {product.sizes.map((size) => {
+                  const active = size === selectedSize
+                  return (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => setSelectedSize(size)}
+                      className={cn(
+                        'border py-2 text-xs font-medium tracking-widest transition-colors',
+                        active
+                          ? 'border-ink bg-ink text-cream'
+                          : 'border-border bg-transparent hover:border-ink',
+                      )}
+                    >
+                      {size}
+                    </button>
+                  )
+                })}
               </div>
             </div>
-          </div>
 
-          {/* 預購按鈕 */}
-          <div className="mt-8 pt-2">
+            {/* 加到購物車按鈕 */}
             <button
               type="button"
-              onClick={() => {
-                alert(`已選取：${product.name}（${selectedColor.toUpperCase()} / ${selectedSize}）`)
-                onClose()
-              }}
-              className="w-full bg-[#181614] py-3.5 font-mono text-xs font-bold tracking-[0.25em] text-[#f2ede4] transition-all hover:bg-[#2c2825] active:scale-[0.99]"
+              onClick={handleAddToCart}
+              disabled={added}
+              className={cn(
+                'mt-6 w-full py-4 text-xs font-medium tracking-[0.25em] text-cream transition-all duration-300',
+                added ? 'bg-burgundy' : 'bg-ink hover:bg-burgundy active:scale-[0.99]',
+              )}
             >
-              PRE-ORDER NOW
+              {added ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Check className="size-4" /> ADDED TO BAG
+                </span>
+              ) : (
+                `ADD TO CART — ${formatPrice(product.price)}`
+              )}
             </button>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   )
 }
