@@ -50,11 +50,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     setTimeout(() => setAdded(false), 2000)
   }
 
-  // 將商品名稱以斜線拆開，讓中文部分能單獨微調
-  const [englishName, chineseName] = product.name.includes('/')
-    ? product.name.split('/').map((s) => s.trim())
-    : [product.name, '']
-
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
@@ -121,16 +116,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：英文維持大粗體，中文與斜線帶入 Noto Serif TC 並拉高至 700 粗度與英文切齊 */}
-            <h2 className="mt-1 flex flex-wrap items-baseline gap-1 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
-              <span>{englishName}</span>
-              {chineseName && (
-                <span className="font-serif-tc text-2xl font-bold tracking-normal text-ink md:text-3xl">
-                  ／{chineseName}
-                </span>
-              )}
+            {/* 標題：完全比照外層卡片字體風格 (font-serif + font-serif-tc)，優雅襯線宋體 */}
+            <h2 className="mt-1 font-serif font-serif-tc text-3xl font-medium tracking-tight text-ink md:text-4xl">
+              {product.name}
             </h2>
-            <p className="font-serif-tc text-sm text-muted-foreground">{product.subtitle}</p>
+            <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
 
             {/* 價格區塊 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
@@ -147,8 +137,8 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案：改用 text-ink、字體稍微加強、行距舒展，突顯思源宋體質感 */}
-            <div className="py-5 font-serif-tc text-[15px] font-medium leading-relaxed text-ink/90 whitespace-pre-line">
+            {/* 說明文案：思源宋體 */}
+            <div className="py-5 font-serif-tc text-[15px] leading-relaxed text-ink/85 whitespace-pre-line">
               {product.description}
             </div>
 
