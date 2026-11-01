@@ -34,17 +34,16 @@ export function MiniCart() {
       .map((item) => `${item.product.name} (${item.color}/${item.size}) x${item.quantity}`)
       .join(' ; ')
 
-    // 依購物車實際金額動態計算（含超商運費）
-    const totalAmount = `NT$ ${finalTotal.toLocaleString()}`
+    const totalAmount = `NT$ ${finalTotal.toLocaleString()} 元`
 
     const params = new URLSearchParams()
+    // 傳給 Tally 的變數名稱必須是 items 與 total
     params.set('items', itemsDescription)
     params.set('total', totalAmount)
 
     const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
     window.open(tallyUrl, '_blank')
   }
-
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex justify-end">
