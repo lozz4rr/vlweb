@@ -8,20 +8,23 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
         <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
           
-          {/* 左側：兩行 VISUAL LEGACY，緊湊大字與原本的微透米白質感 */}
-          <div className="pointer-events-none flex select-none flex-col justify-between lg:col-span-7">
-            <div className="font-display text-[clamp(5.5rem,15vw,13.5rem)] font-extrabold uppercase leading-[0.74] tracking-tight text-cream/15">
+          {/* 左側：兩行 VISUAL LEGACY，恢復一開始的緊湊字距與字型質感 (text-cream/15) */}
+          <div className="select-none pointer-events-none lg:col-span-7 flex flex-col justify-between">
+            <div className="font-display font-extrabold uppercase leading-[0.78] tracking-tight text-cream/15 text-[clamp(4.8rem,13vw,10.5rem)]">
               <div>VISUAL</div>
               <div>LEGACY</div>
             </div>
             
-            <div className="hidden pt-8 text-[10px] tracking-[0.25em] text-cream/40 lg:block">
+            {/* 桌面端左下方微型版權標註 */}
+            <div className="hidden lg:block pt-8 text-[10px] tracking-[0.25em] text-cream/40">
               © {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.
             </div>
           </div>
 
-          {/* 右側：上半部選單 + 向上靠攏的品牌說明 */}
-          <div className="flex flex-col justify-start gap-8 lg:col-span-5 lg:pl-6">
+          {/* 右側：上半部選單 + 下半部品牌介紹（無分隔線） */}
+          <div className="flex flex-col justify-between gap-12 lg:col-span-5 lg:pl-6">
+            
+            {/* 右邊上半：HELP 與 VL 導航群組 */}
             <div className="flex gap-16 sm:gap-24">
               {/* HELP */}
               <div>
@@ -77,8 +80,8 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 右邊下半：品牌標語與理念 */}
-            <div className="pt-2">
+            {/* 右邊下半：品牌標語與中文精神（已完全拿掉分隔線） */}
+            <div className="pt-4 lg:pt-0">
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cream/40">
                 VL — 2026
               </span>
@@ -90,9 +93,11 @@ export function SiteFooter() {
               </p>
             </div>
 
-            <div className="block border-t border-cream/10 pt-6 text-[10px] tracking-widest text-cream/40 lg:hidden">
+            {/* 行動裝置端版權標註 */}
+            <div className="block lg:hidden border-t border-cream/10 pt-6 text-[10px] tracking-widest text-cream/40">
               <span>© {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.</span>
             </div>
+
           </div>
 
         </div>
