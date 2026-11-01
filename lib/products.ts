@@ -1,4 +1,4 @@
-export type GraphicTag = 'vulung' | 'kadjiadji' | 'sun' | 'logo'
+export type GraphicTag = 'vulung' | 'kadjiadji'
 
 export type ProductColor = { name: string; hex: string }
 
@@ -22,21 +22,22 @@ export type Product = {
 
 export const products: Product[] = [
   {
-    id: 'vulung-land-of-origin',
-    name: 'VULUNG',
-    subtitle: 'Land of Origin Tee',
-    nameZh: '百步蛇 — 起源之地',
+    id: 'vulung',
+    name: 'vulung／百步蛇',
+    subtitle: '百步蛇與太陽',
+    nameZh: 'vulung／百步蛇',
     price: 700,
-    fit: 'Relaxed Boxy Fit',
+    fit: 'Heavyweight Boxy Fit',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Burgundy 酒紅', hex: '#7a2e2a' },
-      { name: 'Mustard 芥末黃', hex: '#c9952e' },
-      { name: 'Ink Black 墨黑', hex: '#1e1c1a' },
+      { name: 'Black 黑', hex: '#1e1c1a' },
+      { name: 'White 白', hex: '#f8f8f8' },
     ],
     print: '絹印 Screen Print',
-    description:
-      'Retro American graphic tee featuring the Paiwan hundred-pacer snake (Vulung) — guardian of ancestors and the land we come from.',
+    description: `取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。  
+讓來自根源的故事走進日常，繼續被看見。
+
+Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from our roots into everyday life, so they continue to be seen.`,
     graphics: ['vulung'],
     images: { front: '/images/product-1.png', back: '/images/product-1.png' },
     releasedAt: '2026-09-20',
@@ -44,67 +45,27 @@ export const products: Product[] = [
     isNew: true,
   },
   {
-    id: 'kadjiadji-butterfly',
-    name: 'KADJIADJI',
-    subtitle: 'Butterfly Tee',
-    nameZh: '蝴蝶',
+    id: 'kadjiadji',
+    name: 'kadjiadji／蝴蝶',
+    subtitle: '蝴蝶',
+    nameZh: 'kadjiadji／蝴蝶',
     price: 700,
     fit: 'Relaxed Fit',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Mustard 芥末黃', hex: '#c9952e' },
-      { name: 'Earth Brown 土棕', hex: '#6b4a33' },
-      { name: 'Ink Black 墨黑', hex: '#1e1c1a' },
+      { name: 'Black 黑', hex: '#1e1c1a' },
+      { name: 'White 白', hex: '#f8f8f8' },
     ],
     print: '絹印 Screen Print',
-    description:
-      'Inspired by Kadjiadji (Butterfly), combining retro illustration and bold typography for a light, artistic vibe.',
+    description: `從排灣文化的蝴蝶圖紋出發，轉化為當代服飾語言。  
+把文化穿進生活，也讓故事在新的世代持續流動。
+
+Drawing from butterfly motifs in Paiwan culture, the design transforms tradition into a contemporary visual language. Made to be worn today, while carrying its story into a new generation.`,
     graphics: ['kadjiadji'],
     images: { front: '/images/kadjiadji-front.png', back: '/images/kadjiadji-back.png' },
     releasedAt: '2026-08-12',
     sold: 268,
-  },
-  {
-    id: 'vulung-sun-tradition-tomorrow',
-    name: 'VULUNG / SUN',
-    subtitle: 'Tradition Tomorrow Tee',
-    nameZh: '百步蛇與太陽',
-    price: 700,
-    fit: 'Heavyweight Boxy Fit',
-    sizes: ['M', 'L', 'XL'],
-    colors: [
-      { name: 'Sun Orange 日橘', hex: '#c8662d' },
-      { name: 'Burgundy 酒紅', hex: '#7a2e2a' },
-      { name: 'Cream 米白', hex: '#efe8da' },
-    ],
-    print: '絹印 Screen Print',
-    description:
-      '70s vintage graphic design featuring a snake wrapping around the sun — the origin story, printed for tomorrow.',
-    graphics: ['vulung', 'sun'],
-    images: { front: '/images/sun-front.png', back: '/images/sun-back.png' },
-    releasedAt: '2026-09-28',
-    sold: 356,
     isNew: true,
-  },
-  {
-    id: 'vl-logo',
-    name: 'VL',
-    subtitle: 'Visual Legacy Logo Tee',
-    nameZh: '品牌標誌',
-    price: 700,
-    fit: 'Relaxed Boxy Fit',
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: [
-      { name: 'Earth Brown 土棕', hex: '#6b4a33' },
-      { name: 'Burgundy 酒紅', hex: '#7a2e2a' },
-      { name: 'Ink Black 墨黑', hex: '#1e1c1a' },
-    ],
-    print: '絹印 Screen Print',
-    description: 'The everyday essential with a subtle screen-printed brand wordmark.',
-    graphics: ['logo'],
-    images: { front: '/images/logo-front.png', back: '/images/logo-back.png' },
-    releasedAt: '2026-06-01',
-    sold: 590,
   },
 ]
 
