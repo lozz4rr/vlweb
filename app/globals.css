@@ -46,33 +46,15 @@
 }
 
 :root {
-  color-scheme: light;
-  --cream: #efe8da;
-  --ink: #1e1c1a;
-  --vintage-brown: #6b4a33;
-  --burgundy: #5b1824;
-  --mustard: #c4a052;
-  --washed-blue: #a9bcc6;
-
-  --background: var(--cream);
-  --foreground: var(--ink);
-  --card: #f5f0e6;
-  --card-foreground: var(--ink);
-  --popover: #f5f0e6;
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--cream);
-  --secondary: #e4dccb;
-  --secondary-foreground: var(--ink);
-  --muted: #e4dccb;
-  --muted-foreground: #6e655a;
-  --accent: var(--burgundy);
-  --accent-foreground: var(--cream);
-  --destructive: #8f2a2a;
-  --border: #cfc4b0;
-  --input: #cfc4b0;
-  --ring: var(--vintage-brown);
-  --radius: 0rem;
+  /* 主背景改為向日葵金黃 */
+  --cream: #FCBF49;
+  
+  /* 主要文字、線條、邊框全面改為深午夜藍 */
+  --ink: #0A233A;
+  
+  /* 次要文字與邊框透明度（深藍調） */
+  --border: rgba(10, 35, 58, 0.18);
+  --muted-foreground: rgba(10, 35, 58, 0.65);
 }
 
 @layer base {
