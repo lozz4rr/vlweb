@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Huninn&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
@@ -10,7 +9,7 @@
   --font-sans: 'Helvetica Neue', Arial, 'Huninn', sans-serif;
   --font-display: var(--font-barlow-condensed), 'Huninn', sans-serif;
   --font-serif: var(--font-instrument-serif), 'Huninn', Georgia, serif;
-  --font-serif-tc: 'Noto Serif TC', serif;
+  --font-serif-tc: var(--font-serif-tc), 'Noto Serif TC', serif;
 
   --color-cream: var(--cream);
   --color-ink: var(--ink);
@@ -89,7 +88,7 @@
 }
 
 .font-serif-tc {
-  font-family: 'Noto Serif TC', serif !important;
+  font-family: var(--font-serif-tc), 'Noto Serif TC', serif !important;
 }
 
 .grain::after {
