@@ -5,11 +5,11 @@ import Link from 'next/link'
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/20 bg-ink text-cream">
-      <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
-        {/* 只保留 HELP 與 VL，移至畫面置中排列 */}
-        <div className="flex flex-wrap justify-center gap-16 md:gap-28 text-center sm:text-left">
-          {/* HELP */}
-          <div>
+      {/* 上方選單區塊：HELP 與 VL 保持原有的左對齊排版風格 */}
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 md:px-8 md:pt-20">
+        <div className="flex justify-center gap-20 sm:gap-36 text-left">
+          {/* HELP 欄位 */}
+          <div className="text-left">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/50">
               HELP
             </span>
@@ -24,7 +24,6 @@ export function SiteFooter() {
                   Shipping
                 </Link>
               </li>
-              {/* 已刪除第 3 項 Returns */}
               <li>
                 <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
                   Contact
@@ -33,8 +32,8 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* VL */}
-          <div>
+          {/* VL 欄位 */}
+          <div className="text-left">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/50">
               VL
             </span>
@@ -49,7 +48,6 @@ export function SiteFooter() {
                   Story
                 </Link>
               </li>
-              {/* 已刪除第 3 項 Lookbook */}
               <li>
                 <a
                   href="https://instagram.com"
@@ -63,18 +61,20 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* 底部大型 VISUAL LEGACY 字樣與版權聲明 */}
-        <div className="mt-16 pt-12 border-t border-cream/10">
-          <div className="overflow-hidden">
-            <p className="font-display text-[clamp(2.5rem,11vw,9rem)] font-extrabold uppercase leading-[0.8] tracking-tight text-cream/15 text-center select-none">
-              VISUAL LEGACY
-            </p>
-          </div>
-          <div className="mt-8 flex flex-col items-center justify-between gap-4 text-[10px] tracking-widest text-cream/40 sm:flex-row">
-            <span>© {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.</span>
-            <span>MADE IN TAIWAN</span>
-          </div>
+      {/* 原本的大型滿版 VISUAL LEGACY：不限寬度、緊貼底部、橫跨螢幕 */}
+      <div className="w-full overflow-hidden select-none pointer-events-none px-4">
+        <p className="font-display text-[clamp(4.5rem,19vw,16rem)] font-extrabold uppercase leading-[0.75] tracking-tight text-cream/15 text-center whitespace-nowrap">
+          VISUAL LEGACY
+        </p>
+      </div>
+
+      {/* 底部微型版權標註 */}
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8">
+        <div className="flex flex-col items-center justify-between gap-4 text-[10px] tracking-widest text-cream/40 sm:flex-row">
+          <span>© {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.</span>
+          <span>MADE IN TAIWAN</span>
         </div>
       </div>
     </footer>
