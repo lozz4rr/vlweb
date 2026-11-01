@@ -1,4 +1,4 @@
-export type GraphicTag = 'VULUNG' | 'KADJIADJI' | 'SUN' | 'LOGO'
+export type GraphicTag = 'vulung' | 'kadjiadji' | 'sun' | 'logo' | 'VULUNG' | 'KADJIADJI' | 'SUN' | 'LOGO'
 
 export interface ProductColor {
   name: string
@@ -20,9 +20,9 @@ export interface Product {
     front: string
     back?: string
   }
-  graphics?: GraphicTag[]
-  sold?: number
-  releasedAt?: string
+  graphics: GraphicTag[]
+  sold: number
+  releasedAt: string
 }
 
 export function formatPrice(price: number): string {
@@ -49,7 +49,7 @@ export const products: Product[] = [
       front: '/images/products/vulung-front.jpg',
       back: '/images/products/vulung-back.jpg',
     },
-    graphics: ['VULUNG', 'SUN'],
+    graphics: ['vulung', 'sun'],
     sold: 120,
     releasedAt: '2026-10-01',
   },
@@ -72,7 +72,7 @@ export const products: Product[] = [
       front: '/images/products/kadjiadji-front.jpg',
       back: '/images/products/kadjiadji-back.jpg',
     },
-    graphics: ['KADJIADJI'],
+    graphics: ['kadjiadji'],
     sold: 95,
     releasedAt: '2026-10-01',
   },
