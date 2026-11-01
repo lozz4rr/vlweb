@@ -1,3 +1,4 @@
+import { Noto_Serif_TC } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Barlow_Condensed, Instrument_Serif } from 'next/font/google'
