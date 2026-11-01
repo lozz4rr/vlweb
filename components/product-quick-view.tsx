@@ -1,12 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Check, X } from 'lucide-react'
-import { useCart } from '@/components/cart-context'
-import { formatPrice, type Product, type ProductColor } from '@/lib/products'
-import { cn } from '@/lib/utils'
+import { X } from 'lucide-react'
+import { useCart } from '@/lib/cart-context'
+import type { Product, ProductColor, ProductSize } from '@/lib/products'
 
 interface ProductQuickViewProps {
   product: Product | null
@@ -15,208 +13,146 @@ interface ProductQuickViewProps {
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
   const { addItem } = useCart()
-  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null)
-  const [selectedSize, setSelectedSize] = useState<string>('M')
-  const [activeSide, setActiveSide] = useState<'front' | 'back'>('front')
-  const [added, setAdded] = useState(false)
+  const [selectedColor, setSelectedColor] = useState<ProductColor>('black')
+  const [selectedSize, setSelectedSize] = useState<ProductSize>('M')
 
-  useEffect(() => {
-    if (product) {
-      setSelectedColor(product.colors[0] ?? null)
-      setSelectedSize(product.sizes[1] ?? product.sizes[0] ?? 'M')
-      setActiveSide('front')
-      setAdded(false)
-    }
-  }, [product])
+  if (!product) return null
 
-  useEffect(() => {
-    if (!product) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
-    document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-    }
-  }, [product, onClose])
-
-  if (!product || !selectedColor) return null
-
-  const currentImage = product.images[activeSide] || product.images.front
+  const isSale = product.originalPrice && product.originalPrice > product.price
+  const discountPercent = isSale
+    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
+    : 0
 
   const handleAddToCart = () => {
-    addItem(product, selectedColor.name, selectedSize)
-    setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
+    addItem({
+      id: `${product.id}-${selectedColor}-${selectedSize}`,
+      productId: product.id,
+      name: product.name,
+      subtitle: product.subtitle,
+      price: product.price,
+      color: selectedColor,
+      size: selectedSize,
+      image: selectedColor === 'white' ? product.images.white : product.images.black,
+      quantity: 1,
+    })
+    onClose()
   }
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/70 backdrop-blur-sm">
+      <div className="relative w-full max-w-3xl overflow-hidden rounded-none border border-ink/20 bg-cream p-6 shadow-2xl md:p-8">
+        {/* 關閉按鈕 */}
+        <button
           onClick={onClose}
-        />
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 16 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-none bg-cream text-ink shadow-2xl md:flex-row"
+          type="button"
+          className="absolute right-4 top-4 text-ink/60 transition-colors hover:text-ink"
+          aria-label="Close"
         >
-          {/* 關閉按鈕 */}
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute right-4 top-4 z-20 flex size-9 items-center justify-center rounded-full bg-cream/80 text-ink backdrop-blur-sm transition-opacity hover:opacity-70"
-            aria-label="Close"
-          >
-            <X className="size-5" />
-          </button>
+          <X className="h-5 w-5" />
+        </button>
 
-          {/* 圖片預覽區 */}
-          <div className="relative aspect-square w-full shrink-0 bg-secondary md:w-1/2">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {/* 左側：商品圖片 + 紅色折扣角標 */}
+          <div className="relative aspect-square w-full overflow-hidden bg-black/5">
             <Image
-              src={currentImage}
+              src={selectedColor === 'white' ? product.images.white : product.images.black}
               alt={product.name}
               fill
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-opacity duration-300"
-              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
-            {product.images.back && product.images.back !== product.images.front && (
-              <div className="absolute bottom-4 left-4 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setActiveSide('front')}
-                  className={cn(
-                    'px-3 py-1 text-[11px] font-medium tracking-widest transition-colors',
-                    activeSide === 'front' ? 'bg-ink text-cream' : 'bg-cream/80 text-ink hover:bg-cream',
-                  )}
-                >
-                  FRONT
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveSide('back')}
-                  className={cn(
-                    'px-3 py-1 text-[11px] font-medium tracking-widest transition-colors',
-                    activeSide === 'back' ? 'bg-ink text-cream' : 'bg-cream/80 text-ink hover:bg-cream',
-                  )}
-                >
-                  BACK
-                </button>
-              </div>
+            {/* 折扣維持醒目紅色 */}
+            {isSale && (
+              <span className="absolute left-3 top-3 bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider text-white">
+                -{discountPercent}% OFF
+              </span>
             )}
           </div>
 
-          {/* 內容設定區 */}
-          <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：採用 font-serif-tc 並加強為 font-bold (700 粗體) */}
-            <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
-              {product.name}
-            </h2>
-            <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
-
-            {/* 價格區塊 */}
-            <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
-              <span className="font-display text-3xl font-bold text-ink">
-                {formatPrice(product.price)}
+          {/* 右側：商品規格與購買 */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
+                {product.graphics.join(' / ')}
               </span>
-              {product.originalPrice && (
-                <span className="font-display text-base text-muted-foreground line-through">
-                  {formatPrice(product.originalPrice)}
+              <h3 className="mt-1 font-serif text-2xl font-bold text-ink">
+                {product.name}
+              </h3>
+              <p className="mt-0.5 text-xs tracking-wider text-ink/60">
+                {product.subtitle}
+              </p>
+
+              {/* 價格區塊：特價保持紅色 */}
+              <div className="mt-4 flex items-baseline gap-3">
+                <span className="font-mono text-2xl font-bold text-ink">
+                  NT$ {product.price.toLocaleString()}
                 </span>
-              )}
-              <span className="rounded bg-burgundy/10 px-2.5 py-0.5 text-xs font-semibold tracking-wider text-burgundy">
-                預購折扣
-              </span>
-            </div>
-
-            {/* 說明文案：思源宋體 */}
-            <div className="py-5 font-serif-tc text-[15px] leading-relaxed text-ink/85 whitespace-pre-line">
-              {product.description}
-            </div>
-
-            {/* 顏色選項 */}
-            <div className="border-t border-border/60 py-4">
-              <div className="flex items-center justify-between text-xs tracking-[0.2em]">
-                <span className="font-medium">COLOR 衣服顏色</span>
-                <span className="text-muted-foreground">{selectedColor.name}</span>
+                {isSale && (
+                  <span className="font-mono text-sm text-red-600/70 line-through">
+                    NT$ {product.originalPrice?.toLocaleString()}
+                  </span>
+                )}
               </div>
-              <div className="mt-3 flex gap-2">
-                {product.colors.map((color) => {
-                  const active = color.name === selectedColor.name
-                  return (
+
+              {/* 顏色選擇 */}
+              <div className="mt-6">
+                <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
+                  COLOR: <span className="font-bold text-ink uppercase">{selectedColor}</span>
+                </span>
+                <div className="mt-2.5 flex gap-3">
+                  {(['black', 'white'] as ProductColor[]).map((color) => (
                     <button
-                      key={color.name}
+                      key={color}
                       type="button"
                       onClick={() => setSelectedColor(color)}
-                      aria-label={color.name}
-                      className={cn(
-                        'size-7 rounded-full border border-border transition-all',
-                        active && 'ring-2 ring-ink ring-offset-2',
-                      )}
-                      style={{ backgroundColor: color.hex }}
+                      className={`h-7 w-7 rounded-full border-2 transition-transform ${
+                        color === 'black' ? 'bg-[#181818]' : 'bg-white'
+                      } ${
+                        selectedColor === color
+                          ? 'border-ink scale-110 shadow-sm'
+                          : 'border-black/20 hover:scale-105'
+                      }`}
+                      aria-label={color}
                     />
-                  )
-                })}
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* 尺寸選項 */}
-            <div className="border-t border-border/60 py-4">
-              <div className="flex items-center justify-between text-xs tracking-[0.2em]">
-                <span className="font-medium">SIZE 尺寸</span>
-                <span className="text-muted-foreground">{selectedSize}</span>
-              </div>
-              <div className="mt-3 grid grid-cols-4 gap-2">
-                {product.sizes.map((size) => {
-                  const active = size === selectedSize
-                  return (
+              {/* 尺寸選擇 */}
+              <div className="mt-6">
+                <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
+                  SIZE
+                </span>
+                <div className="mt-2.5 flex gap-2">
+                  {(['M', 'L', 'XL'] as ProductSize[]).map((size) => (
                     <button
                       key={size}
                       type="button"
                       onClick={() => setSelectedSize(size)}
-                      className={cn(
-                        'border py-2 text-xs font-medium tracking-widest transition-colors',
-                        active
-                          ? 'border-ink bg-ink text-cream'
-                          : 'border-border bg-transparent hover:border-ink',
-                      )}
+                      className={`flex h-9 w-11 items-center justify-center font-mono text-xs font-semibold tracking-wider transition-colors ${
+                        selectedSize === size
+                          ? 'bg-ink text-cream'
+                          : 'border border-ink/20 text-ink hover:border-ink'
+                      }`}
                     >
                       {size}
                     </button>
-                  )
-                })}
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* 加到購物車按鈕 */}
+            {/* 加入購物車按鈕：向日葵金黃 #FCBF49 實心大按鈕 */}
             <button
-              type="button"
               onClick={handleAddToCart}
-              disabled={added}
-              className={cn(
-                'mt-6 w-full py-4 text-xs font-medium tracking-[0.25em] text-cream transition-all duration-300',
-                added ? 'bg-burgundy' : 'bg-ink hover:bg-burgundy active:scale-[0.99]',
-              )}
+              type="button"
+              className="mt-8 flex w-full items-center justify-center bg-[#FCBF49] py-3.5 font-mono text-xs font-bold tracking-[0.25em] text-ink transition-transform duration-150 hover:bg-[#e5ac42] active:scale-[0.99]"
             >
-              {added ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Check className="size-4" /> ADDED TO BAG
-                </span>
-              ) : (
-                `ADD TO CART — ${formatPrice(product.price)}`
-              )}
+              ADD TO CART
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
+    </div>
   )
 }
