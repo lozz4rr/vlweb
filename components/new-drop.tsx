@@ -41,37 +41,37 @@ export function NewDrop() {
   })
 
   return (
-    <section id="new-drop" className="border-t border-[#0A233A]/15 bg-[#FCBF49] px-4 py-20 text-[#0A233A] md:px-8">
+    <section id="new-drop" className="border-t border-border/60 bg-cream px-4 py-20 text-ink md:px-8">
       <div className="mx-auto max-w-7xl">
-        {/* 頂部標題區 */}
+        {/* 頂部標題 */}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <span className="font-mono text-xs tracking-[0.25em] text-[#0A233A]/70">
+            <span className="font-mono text-xs tracking-[0.25em] text-ink/60">
               DROP 001
             </span>
-            <h2 className="mt-2 font-display text-5xl font-extrabold tracking-tight text-[#0A233A] md:text-6xl">
+            <h2 className="mt-2 font-display text-5xl font-extrabold tracking-tight text-ink md:text-6xl">
               NEW DROP
             </h2>
           </div>
 
           {/* 排序選單 */}
           <div className="flex items-center gap-3 self-start md:self-end">
-            <span className="font-mono text-xs tracking-wider text-[#0A233A]/70">SORT BY</span>
+            <span className="font-mono text-xs tracking-wider text-ink/60">SORT BY</span>
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="border-b border-[#0A233A] bg-transparent py-1 font-mono text-xs font-medium text-[#0A233A] focus:outline-none"
+              className="border-b border-ink bg-transparent py-1 font-mono text-xs font-medium text-ink focus:outline-none"
             >
-              <option value="newest" className="bg-[#FCBF49] text-[#0A233A]">Newest</option>
-              <option value="popular" className="bg-[#FCBF49] text-[#0A233A]">Popular</option>
-              <option value="price-asc" className="bg-[#FCBF49] text-[#0A233A]">Price: Low to High</option>
-              <option value="price-desc" className="bg-[#FCBF49] text-[#0A233A]">Price: High to Low</option>
+              <option value="newest">Newest</option>
+              <option value="popular">Popular</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
             </select>
           </div>
         </div>
 
-        {/* 分類按鈕 */}
-        <div className="mt-8 flex flex-wrap gap-2 border-b border-[#0A233A]/15 pb-6">
+        {/* 分類按鈕：選中時使用向日葵金黃 #FCBF49 底 + 墨黑字 */}
+        <div className="mt-8 flex flex-wrap gap-2 border-b border-border/60 pb-6">
           {filterTabs.map((tab) => {
             const active = activeFilter === tab.value
             return (
@@ -80,10 +80,10 @@ export function NewDrop() {
                 type="button"
                 onClick={() => setActiveFilter(tab.value)}
                 className={cn(
-                  'px-4 py-1.5 text-xs font-semibold tracking-[0.2em] transition-colors',
+                  'px-4 py-1.5 text-xs font-semibold tracking-[0.2em] transition-all duration-200',
                   active
-                    ? 'bg-[#0A233A] text-[#FCBF49]'
-                    : 'border border-[#0A233A]/40 bg-transparent text-[#0A233A] hover:border-[#0A233A]',
+                    ? 'bg-[#FCBF49] text-ink shadow-sm'
+                    : 'border border-ink/20 bg-transparent text-ink/80 hover:border-ink hover:text-ink',
                 )}
               >
                 {tab.label}
@@ -92,7 +92,7 @@ export function NewDrop() {
           })}
         </div>
 
-        {/* 商品卡片列表 */}
+        {/* 商品列表 */}
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
           {filteredProducts.map((product, index) => (
             <ProductCard
