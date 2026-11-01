@@ -36,7 +36,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="mb-6 text-[11px] font-medium tracking-[0.4em]"
         >
-          DROP 02 — AUTUMN 2026
+          DROP 001 — AUTUMN 2026
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
