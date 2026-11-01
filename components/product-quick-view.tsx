@@ -16,7 +16,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
   if (!product) return null
 
-  // 精準相容各種商品圖片資料結構，避免破圖
   const getImageSrc = () => {
     const anyProd = product as any
     if (selectedColor === 'black') {
@@ -95,7 +94,9 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 文化理念介紹（完全還原截圖的細黑體與斜體英文） */}
+            {/* =========================================
+                ▼ 這裡就是你指定的商品說明核心區塊 ▼
+               ========================================= */}
             <div className="mt-6 space-y-3 font-sans text-xs leading-relaxed text-[#2c2825]">
               <p className="font-normal text-[#2c2825]/90">
                 取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。
@@ -106,8 +107,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                 Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from roots into everyday life, so they continue to be seen.
               </p>
             </div>
+            {/* =========================================
+                ▲ 商品說明區塊結束 ▲
+               ========================================= */}
 
-            {/* 衣服顏色切換區 */}
+            {/* 衣服顏色切換 */}
             <div className="mt-8 border-t border-[#1a1715]/10 pt-5">
               <div className="flex items-center justify-between text-xs font-sans">
                 <span className="text-[#1a1715]/80">衣服顏色</span>
