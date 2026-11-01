@@ -20,8 +20,8 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* 右側：上半部選單 + 下半部品牌介紹（無分隔線） */}
-          <div className="flex flex-col justify-between gap-8 lg:col-span-5 lg:pl-6">
+          {/* 右側：選單與品牌介紹（往上靠攏，消除過大留白） */}
+          <div className="flex flex-col justify-start gap-10 lg:col-span-5 lg:pl-6">
             <div className="flex gap-16 sm:gap-24">
               {/* HELP */}
               <div>
@@ -77,7 +77,7 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 品牌理念說明 */}
+            {/* 品牌理念說明（已向上拉近） */}
             <div className="pt-2">
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#efe8da]/40">
                 VL — 2026
