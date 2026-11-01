@@ -66,18 +66,23 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
           <div>
             <h3
               onClick={() => onView(product)}
-              className="font-display text-lg font-bold tracking-tight text-ink cursor-pointer hover:opacity-70 transition-opacity"
+              className="font-display font-serif-tc text-lg font-bold tracking-tight text-ink cursor-pointer hover:opacity-70 transition-opacity"
             >
               {product.name}
             </h3>
             <p className="font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
           </div>
 
-          {/* 價格：顯示特價 680，並將原價 750 劃掉 */}
+          {/* 價格：特價 680、劃掉原價 750、預購折扣標籤 */}
           <div className="flex flex-col items-end">
-            <span className="font-display text-base font-bold text-burgundy">
-              {formatPrice(product.price)}
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="rounded bg-burgundy/10 px-1.5 py-0.5 text-[10px] font-semibold text-burgundy">
+                預購折扣
+              </span>
+              <span className="font-display text-base font-bold text-burgundy">
+                {formatPrice(product.price)}
+              </span>
+            </div>
             {product.originalPrice && (
               <span className="font-display text-xs text-muted-foreground line-through">
                 {formatPrice(product.originalPrice)}
@@ -86,7 +91,8 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
           </div>
         </div>
 
-        <div className="mt-3 flex items-center justify-between pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
+        {/* 顏色小圓點（右側原本的 Fit 版型文字已完全移除） */}
+        <div className="mt-3 flex items-center pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
           <div className="flex items-center gap-1.5">
             {product.colors.map((c) => (
               <span
@@ -96,7 +102,6 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
               />
             ))}
           </div>
-          <span className="font-serif-tc text-[11px]">{product.fit}</span>
         </div>
       </div>
     </motion.div>
