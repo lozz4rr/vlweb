@@ -50,6 +50,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     setTimeout(() => setAdded(false), 2000)
   }
 
+  // 將商品名稱以斜線拆開，讓中文部分能單獨縮小對齊
+  const [englishName, chineseName] = product.name.includes('/')
+    ? product.name.split('/').map((s) => s.trim())
+    : [product.name, '']
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
@@ -116,12 +121,18 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            <h2 className="mt-1 font-display font-serif-tc text-3xl font-extrabold tracking-tight md:text-4xl">
-              {product.name}
+            {/* 標題：英文大字，斜線與中文縮小貼齊 */}
+            <h2 className="mt-1 flex flex-wrap items-baseline gap-1.5 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
+              <span>{englishName}</span>
+              {chineseName && (
+                <span className="font-serif-tc text-xl font-normal text-ink/90 md:text-2xl">
+                  ／{chineseName}
+                </span>
+              )}
             </h2>
             <p className="font-serif-tc text-sm text-muted-foreground">{product.subtitle}</p>
 
-            {/* 價格區塊：劃掉原價 750，特價 680，預購折扣標籤 */}
+            {/* 價格區塊 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
               <span className="font-display text-3xl font-bold text-ink">
                 {formatPrice(product.price)}
@@ -136,7 +147,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案：套用 Noto Serif TC */}
+            {/* 說明文案 */}
             <div className="py-5 font-serif-tc text-sm leading-relaxed text-ink/80 whitespace-pre-line">
               {product.description}
             </div>
