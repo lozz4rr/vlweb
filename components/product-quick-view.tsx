@@ -116,8 +116,8 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：完全比照外層卡片字體風格 (font-serif + font-serif-tc)，優雅襯線宋體 */}
-            <h2 className="mt-1 font-serif font-serif-tc text-3xl font-medium tracking-tight text-ink md:text-4xl">
+            {/* 標題：採用 font-serif-tc 並加強為 font-bold (700 粗體) */}
+            <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
               {product.name}
             </h2>
             <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
