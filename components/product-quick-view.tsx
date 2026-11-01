@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { X } from 'lucide-react'
-import type { Product, ProductColor, ProductSize } from '@/lib/products'
+import type { Product } from '@/lib/products'
 
 interface ProductQuickViewProps {
   product: Product | null
@@ -11,8 +11,8 @@ interface ProductQuickViewProps {
 }
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
-  const [selectedColor, setSelectedColor] = useState<ProductColor>('black')
-  const [selectedSize, setSelectedSize] = useState<ProductSize>('M')
+  const [selectedView, setSelectedView] = useState<'front' | 'back'>('front')
+  const [selectedSize, setSelectedSize] = useState<string>('M')
 
   if (!product) return null
 
@@ -21,8 +21,13 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0
 
+  const currentImage =
+    selectedView === 'back' && product.images?.back
+      ? product.images.back
+      : product.images?.front || ''
+
   const handleAddToCart = () => {
-    alert(`已加入購物車：${product.name} (${selectedColor.toUpperCase()} / ${selectedSize})`)
+    alert(`已加入購物車：${product.name} (${selectedSize})`)
     onClose()
   }
 
@@ -39,14 +44,17 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
         </button>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {/* 左側：商品圖片 */}
           <div className="relative aspect-square w-full overflow-hidden bg-black/5">
-            <Image
-              src={selectedColor === 'white' ? product.images.white : product.images.black}
-              alt={product.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+            {currentImage && (
+              <Image
+                src={currentImage}
+                alt={product.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            )}
             {isSale && (
               <span className="absolute left-3 top-3 bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider text-white">
                 -{discountPercent}% OFF
@@ -54,10 +62,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
             )}
           </div>
 
+          {/* 右側：商品資訊與選項 */}
           <div className="flex flex-col justify-between">
             <div>
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
-                {product.graphics.join(' / ')}
+                {product.graphics?.join(' / ')}
               </span>
               <h3 className="mt-1 font-serif text-2xl font-bold text-ink">
                 {product.name}
@@ -77,35 +86,46 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                 )}
               </div>
 
-              <div className="mt-6">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
-                  COLOR: <span className="font-bold text-ink uppercase">{selectedColor}</span>
-                </span>
-                <div className="mt-2.5 flex gap-3">
-                  {(['black', 'white'] as ProductColor[]).map((color) => (
+              {/* 視角切換（若有背面圖） */}
+              {product.images?.back && (
+                <div className="mt-6">
+                  <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
+                    VIEW
+                  </span>
+                  <div className="mt-2.5 flex gap-2">
                     <button
-                      key={color}
                       type="button"
-                      onClick={() => setSelectedColor(color)}
-                      className={`h-7 w-7 rounded-full border-2 transition-transform ${
-                        color === 'black' ? 'bg-[#181818]' : 'bg-white'
-                      } ${
-                        selectedColor === color
-                          ? 'border-ink scale-110 shadow-sm'
-                          : 'border-black/20 hover:scale-105'
+                      onClick={() => setSelectedView('front')}
+                      className={`px-3 py-1 font-mono text-xs font-semibold tracking-wider transition-colors ${
+                        selectedView === 'front'
+                          ? 'bg-ink text-cream'
+                          : 'border border-ink/20 text-ink hover:border-ink'
                       }`}
-                      aria-label={color}
-                    />
-                  ))}
+                    >
+                      FRONT
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedView('back')}
+                      className={`px-3 py-1 font-mono text-xs font-semibold tracking-wider transition-colors ${
+                        selectedView === 'back'
+                          ? 'bg-ink text-cream'
+                          : 'border border-ink/20 text-ink hover:border-ink'
+                      }`}
+                    >
+                      BACK
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
+              {/* 尺寸選擇 */}
               <div className="mt-6">
                 <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
                   SIZE
                 </span>
                 <div className="mt-2.5 flex gap-2">
-                  {(['M', 'L', 'XL'] as ProductSize[]).map((size) => (
+                  {['M', 'L', 'XL'].map((size) => (
                     <button
                       key={size}
                       type="button"
