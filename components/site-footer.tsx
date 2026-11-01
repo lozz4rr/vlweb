@@ -5,92 +5,101 @@ import Link from 'next/link'
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/20 bg-ink text-cream">
-      {/* 上方導航與品牌理念區塊 */}
-      <div className="mx-auto max-w-7xl px-6 pt-16 pb-14 md:px-12 md:pt-20">
-        <div className="flex flex-col justify-between gap-12 md:flex-row md:items-start">
-          {/* 左側：品牌精神 */}
-          <div className="max-w-md">
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-cream/40">
-              VL — VISUAL LEGACY
-            </span>
-            <h3 className="mt-4 font-display text-2xl font-extrabold uppercase tracking-tight text-cream md:text-3xl">
-              MADE TODAY. TRADITION TOMORROW.
-            </h3>
-            <p className="mt-3 font-serif-tc text-sm leading-relaxed tracking-wider text-cream/70 md:text-base">
-              現代的創作就是未來的傳統
-            </p>
-          </div>
-
-          {/* 右側：選單連結群組（固定寬度與合理間距，結構緊湊精緻） */}
-          <div className="flex gap-16 sm:gap-24">
-            {/* HELP */}
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/40">
-                HELP
-              </span>
-              <ul className="mt-4 space-y-3 text-xs tracking-wider">
-                <li>
-                  <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
-                    Size Guide
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
-                    Shipping
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
-                    Contact
-                  </Link>
-                </li>
-              </ul>
+      <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
+        <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
+          
+          {/* 左側：大型 VISUAL LEGACY 分兩行，適度拉開字距 */}
+          <div className="select-none lg:col-span-7 flex flex-col justify-between">
+            <div className="font-display font-extrabold uppercase leading-[0.82] tracking-[0.04em] text-cream/90 text-[clamp(3.8rem,10vw,7.8rem)]">
+              <div>VISUAL</div>
+              <div className="mt-2 tracking-[0.08em]">LEGACY</div>
             </div>
-
-            {/* VL */}
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/40">
-                VL
-              </span>
-              <ul className="mt-4 space-y-3 text-xs tracking-wider">
-                <li>
-                  <Link href="#about" className="text-cream/80 transition-colors hover:text-cream">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#story" className="text-cream/80 transition-colors hover:text-cream">
-                    Story
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cream/80 transition-colors hover:text-cream"
-                  >
-                    Instagram
-                  </a>
-                </li>
-              </ul>
+            
+            {/* 桌面端靠左下方顯示微型標註 */}
+            <div className="hidden lg:block pt-8 text-[10px] tracking-[0.25em] text-cream/40">
+              © {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* 底層大型滿版 VISUAL LEGACY（精準絕對置中） */}
-      <div className="relative flex w-full justify-center overflow-hidden pointer-events-none select-none">
-        <p className="font-display text-[clamp(4rem,18.5vw,15.5rem)] font-extrabold uppercase leading-[0.72] tracking-tighter text-cream/15 text-center whitespace-nowrap">
-          VISUAL LEGACY
-        </p>
-      </div>
+          {/* 右側：上半部選單 + 下半部品牌介紹 */}
+          <div className="flex flex-col justify-between gap-12 lg:col-span-5 lg:pl-6">
+            
+            {/* 右邊上半：HELP 與 VL 導航群組 */}
+            <div className="flex gap-16 sm:gap-24">
+              {/* HELP */}
+              <div>
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/40">
+                  HELP
+                </span>
+                <ul className="mt-4 space-y-2.5 text-xs tracking-wider">
+                  <li>
+                    <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
+                      Size Guide
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
+                      Shipping
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#help" className="text-cream/80 transition-colors hover:text-cream">
+                      Contact
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
-      {/* 最下緣版權標註 */}
-      <div className="mx-auto max-w-7xl px-6 py-6 md:px-12">
-        <div className="flex flex-col items-center justify-between gap-4 text-[10px] tracking-widest text-cream/40 sm:flex-row">
-          <span>© {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.</span>
-          <span>MADE IN TAIWAN</span>
+              {/* VL */}
+              <div>
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-cream/40">
+                  VL
+                </span>
+                <ul className="mt-4 space-y-2.5 text-xs tracking-wider">
+                  <li>
+                    <Link href="#about" className="text-cream/80 transition-colors hover:text-cream">
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#story" className="text-cream/80 transition-colors hover:text-cream">
+                      Story
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cream/80 transition-colors hover:text-cream"
+                    >
+                      Instagram
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 右邊下半：品牌標語與中文精神介紹 */}
+            <div className="border-t border-cream/10 pt-8 lg:pt-10">
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cream/40">
+                VL — 2026
+              </span>
+              <h3 className="mt-2 font-display text-xl font-extrabold uppercase tracking-tight text-cream sm:text-2xl">
+                MADE TODAY. TRADITION TOMORROW.
+              </h3>
+              <p className="mt-2 font-serif-tc text-sm tracking-widest text-cream/70">
+                現代的創作就是未來的傳統
+              </p>
+            </div>
+
+            {/* 行動裝置端版權標註 */}
+            <div className="block lg:hidden border-t border-cream/10 pt-6 text-[10px] tracking-widest text-cream/40">
+              <span>© {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.</span>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </footer>
