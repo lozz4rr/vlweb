@@ -3,14 +3,22 @@
 @theme {
   --color-cream: #efe8da;
   --color-ink: #1e1c1a;
+  --color-coffee: #2b211b;
+  --font-display: var(--font-display, "Cinzel", serif);
+  --font-serif: var(--font-serif, "Playfair Display", serif);
+  --font-mono: var(--font-mono, "Space Mono", monospace);
 }
 
 :root {
   --cream: #efe8da;
   --ink: #1e1c1a;
+  --border: rgba(30, 28, 26, 0.15);
+  --muted-foreground: rgba(30, 28, 26, 0.65);
 }
 
 body {
   background-color: var(--cream);
   color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
