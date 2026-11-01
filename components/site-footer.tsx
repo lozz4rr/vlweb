@@ -8,11 +8,11 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
         <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
           
-          {/* 左側：最一開始的透明浮水印質感 (text-cream/15)，分兩行並適度拉開字距 */}
+          {/* 左側：兩行 VISUAL LEGACY，恢復一開始的緊湊字距與字型質感 (text-cream/15) */}
           <div className="select-none pointer-events-none lg:col-span-7 flex flex-col justify-between">
-            <div className="font-display font-extrabold uppercase leading-[0.82] tracking-[0.04em] text-cream/15 text-[clamp(4.2rem,11vw,8.5rem)]">
+            <div className="font-display font-extrabold uppercase leading-[0.78] tracking-tight text-cream/15 text-[clamp(4.8rem,13vw,10.5rem)]">
               <div>VISUAL</div>
-              <div className="mt-2 tracking-[0.09em]">LEGACY</div>
+              <div>LEGACY</div>
             </div>
             
             {/* 桌面端左下方微型版權標註 */}
@@ -21,7 +21,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* 右側：上半部選單 + 下半部品牌介紹 */}
+          {/* 右側：上半部選單 + 下半部品牌介紹（無分隔線） */}
           <div className="flex flex-col justify-between gap-12 lg:col-span-5 lg:pl-6">
             
             {/* 右邊上半：HELP 與 VL 導航群組 */}
@@ -80,8 +80,8 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 右邊下半：品牌標語與中文精神介紹 */}
-            <div className="border-t border-cream/10 pt-8 lg:pt-10">
+            {/* 右邊下半：品牌標語與中文精神（已完全拿掉分隔線） */}
+            <div className="pt-4 lg:pt-0">
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cream/40">
                 VL — 2026
               </span>
