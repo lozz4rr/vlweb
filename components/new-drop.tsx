@@ -43,10 +43,10 @@ export function NewDrop() {
   return (
     <section id="new-drop" className="border-t border-border/60 bg-cream px-4 py-20 text-ink md:px-8">
       <div className="mx-auto max-w-7xl">
-        {/* 頂部標題區 */}
+        {/* 頂部標題 */}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <span className="font-mono text-xs tracking-[0.25em] text-muted-foreground">
+            <span className="font-mono text-xs tracking-[0.25em] text-ink/60">
               DROP 001
             </span>
             <h2 className="mt-2 font-display text-5xl font-extrabold tracking-tight text-ink md:text-6xl">
@@ -56,7 +56,7 @@ export function NewDrop() {
 
           {/* 排序選單 */}
           <div className="flex items-center gap-3 self-start md:self-end">
-            <span className="font-mono text-xs tracking-wider text-muted-foreground">SORT BY</span>
+            <span className="font-mono text-xs tracking-wider text-ink/60">SORT BY</span>
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as SortOption)}
@@ -70,7 +70,7 @@ export function NewDrop() {
           </div>
         </div>
 
-        {/* 分類按鈕 */}
+        {/* 分類按鈕：選中時使用向日葵金黃 #FCBF49 底 + 墨黑字 */}
         <div className="mt-8 flex flex-wrap gap-2 border-b border-border/60 pb-6">
           {filterTabs.map((tab) => {
             const active = activeFilter === tab.value
@@ -80,10 +80,10 @@ export function NewDrop() {
                 type="button"
                 onClick={() => setActiveFilter(tab.value)}
                 className={cn(
-                  'px-4 py-1.5 text-xs font-semibold tracking-[0.2em] transition-colors',
+                  'px-4 py-1.5 text-xs font-semibold tracking-[0.2em] transition-all duration-200',
                   active
-                    ? 'bg-ink text-cream'
-                    : 'border border-border bg-transparent text-ink hover:border-ink',
+                    ? 'bg-[#FCBF49] text-ink shadow-sm'
+                    : 'border border-ink/20 bg-transparent text-ink/80 hover:border-ink hover:text-ink',
                 )}
               >
                 {tab.label}
@@ -92,7 +92,7 @@ export function NewDrop() {
           })}
         </div>
 
-        {/* 商品卡片列表 */}
+        {/* 商品列表 */}
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
           {filteredProducts.map((product, index) => (
             <ProductCard
