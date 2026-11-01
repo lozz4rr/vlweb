@@ -41,13 +41,13 @@ export const products: Product[] = [
     description:
       '取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。\n讓來自根源的故事走進日常，繼續被看見。\n\nInspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from our roots into everyday life, so they continue to be seen.',
     colors: [
-      { name: 'White 白', hex: '#efe8da' },
+      { name: 'White 白', hex: '#ffffff' },
       { name: 'Black 黑', hex: '#1e1c1a' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
     images: {
-      front: '/images/products/vulung-front.jpg',
-      back: '/images/products/vulung-back.jpg',
+      front: '/images/vulung-front.jpg',
+      back: '/images/vulung-back.jpg',
     },
     graphics: ['vulung', 'sun'],
     sold: 120,
@@ -64,13 +64,13 @@ export const products: Product[] = [
     description:
       '從排灣文化的蝴蝶圖紋出發，轉化為當代服飾語言。\n把文化穿進生活，也讓故事在新的世代持續流動。\n\nDrawing from butterfly motifs in Paiwan culture, the design transforms tradition into a contemporary visual language. Made to be worn today, while carrying its story into a new generation.',
     colors: [
-      { name: 'White 白', hex: '#efe8da' },
+      { name: 'White 白', hex: '#ffffff' },
       { name: 'Black 黑', hex: '#1e1c1a' },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
     images: {
-      front: '/images/products/kadjiadji-front.jpg',
-      back: '/images/products/kadjiadji-back.jpg',
+      front: '/images/kadjiadji-front.jpg',
+      back: '/images/kadjiadji-back.jpg',
     },
     graphics: ['kadjiadji'],
     sold: 95,
