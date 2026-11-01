@@ -8,11 +8,11 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
         <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
           
-          {/* 左側：兩行大字，緊湊剛好不重疊 */}
+          {/* 左側：兩行大字，徹底解除行高壓迫，乾淨緊貼不重疊 */}
           <div className="pointer-events-none flex select-none flex-col justify-between lg:col-span-7">
-            <div className="font-display text-[clamp(4.5rem,13vw,11.5rem)] font-extrabold uppercase leading-[0.86] tracking-tight text-[#efe8da]/15">
-              <div>VISUAL</div>
-              <div>LEGACY</div>
+            <div className="flex flex-col font-display text-[clamp(4.2rem,12vw,10.5rem)] font-extrabold uppercase leading-none tracking-tight text-[#efe8da]/15">
+              <span className="block">VISUAL</span>
+              <span className="block mt-1">LEGACY</span>
             </div>
             
             <div className="hidden pt-8 font-mono text-[10px] tracking-[0.25em] text-[#efe8da]/40 lg:block">
