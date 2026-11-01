@@ -8,6 +8,7 @@ export type Product = {
   subtitle: string
   nameZh: string
   price: number
+  originalPrice?: number
   fit: string
   sizes: string[]
   colors: ProductColor[]
@@ -26,7 +27,8 @@ export const products: Product[] = [
     name: 'vulung／百步蛇',
     subtitle: '百步蛇與太陽',
     nameZh: 'vulung／百步蛇',
-    price: 700,
+    price: 680,
+    originalPrice: 750,
     fit: 'Heavyweight Boxy Fit',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
@@ -49,7 +51,8 @@ Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined
     name: 'kadjiadji／蝴蝶',
     subtitle: '蝴蝶',
     nameZh: 'kadjiadji／蝴蝶',
-    price: 700,
+    price: 680,
+    originalPrice: 750,
     fit: 'Relaxed Fit',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
