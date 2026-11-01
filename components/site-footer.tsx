@@ -8,9 +8,9 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
         <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
           
-          {/* 左側：兩行大字，緊湊微透質感 */}
+          {/* 左側：兩行大字，緊湊剛好不重疊 */}
           <div className="pointer-events-none flex select-none flex-col justify-between lg:col-span-7">
-            <div className="font-display text-[clamp(4.5rem,13vw,11.5rem)] font-extrabold uppercase leading-[0.74] tracking-tight text-[#efe8da]/15">
+            <div className="font-display text-[clamp(4.5rem,13vw,11.5rem)] font-extrabold uppercase leading-[0.86] tracking-tight text-[#efe8da]/15">
               <div>VISUAL</div>
               <div>LEGACY</div>
             </div>
@@ -20,7 +20,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* 右側：選單與品牌介紹（往上靠攏，消除過大留白） */}
+          {/* 右側：選單與品牌理念 */}
           <div className="flex flex-col justify-start gap-10 lg:col-span-5 lg:pl-6">
             <div className="flex gap-16 sm:gap-24">
               {/* HELP */}
@@ -77,7 +77,7 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 品牌理念說明（已向上拉近） */}
+            {/* 品牌理念說明 */}
             <div className="pt-2">
               <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#efe8da]/40">
                 VL — 2026
