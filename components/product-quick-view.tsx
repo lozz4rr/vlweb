@@ -11,11 +11,12 @@ interface ProductQuickViewProps {
 }
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
-  const [selectedColor, setSelectedColor] = useState<'white' | 'black'>('white')
+  const [selectedColor, setSelectedColor] = useState<'white' | 'black'>('black')
   const [selectedSize, setSelectedSize] = useState<string>('M')
 
   if (!product) return null
 
+  // 取得商品圖片
   const getImageSrc = () => {
     const anyProd = product as any
     if (selectedColor === 'black') {
@@ -94,24 +95,45 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* =========================================
-                ▼ 這裡就是你指定的商品說明核心區塊 ▼
-               ========================================= */}
-            <div className="mt-6 space-y-3 font-sans text-xs leading-relaxed text-[#2c2825]">
-              <p className="font-normal text-[#2c2825]/90">
+            {/* ========================================================
+                ▼ 按照截圖 1:1 還原的商品說明（包含字級、行距、顏色、斜體）▼
+               ======================================================== */}
+            <div className="mt-6 space-y-4">
+              {/* 中文：極細、灰褐色、高行距 */}
+              <p
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif',
+                  color: '#4a453e',
+                  fontSize: '13px',
+                  lineHeight: '1.75',
+                  letterSpacing: '0.04em',
+                  fontWeight: 300,
+                }}
+              >
                 取自排灣文化中的百步蛇與太陽意象，以潮流風格重新詮釋。
                 <br />
                 讓來自根源的故事走進日常，繼續被看見。
               </p>
-              <p className="italic text-[#2c2825]/60 font-light text-[11px] leading-normal">
+
+              {/* 英文：細長襯線斜體、淡灰褐色 */}
+              <p
+                style={{
+                  fontFamily: '"Playfair Display", "Times New Roman", Georgia, serif',
+                  color: '#756f66',
+                  fontSize: '12.5px',
+                  lineHeight: '1.65',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                }}
+              >
                 Inspired by the hundred-pacer viper and sun motifs in Paiwan culture, reimagined through a contemporary streetwear style. Bringing stories from roots into everyday life, so they continue to be seen.
               </p>
             </div>
-            {/* =========================================
+            {/* ========================================================
                 ▲ 商品說明區塊結束 ▲
-               ========================================= */}
+               ======================================================== */}
 
-            {/* 衣服顏色切換 */}
+            {/* 衣服顏色切換區 */}
             <div className="mt-8 border-t border-[#1a1715]/10 pt-5">
               <div className="flex items-center justify-between text-xs font-sans">
                 <span className="text-[#1a1715]/80">衣服顏色</span>
