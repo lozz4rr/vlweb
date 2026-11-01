@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { X } from 'lucide-react'
-import { useCart } from '@/lib/cart-context'
 import type { Product, ProductColor, ProductSize } from '@/lib/products'
 
 interface ProductQuickViewProps {
@@ -12,7 +11,6 @@ interface ProductQuickViewProps {
 }
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
-  const { addItem } = useCart()
   const [selectedColor, setSelectedColor] = useState<ProductColor>('black')
   const [selectedSize, setSelectedSize] = useState<ProductSize>('M')
 
@@ -24,23 +22,13 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     : 0
 
   const handleAddToCart = () => {
-    addItem({
-      id: `${product.id}-${selectedColor}-${selectedSize}`,
-      productId: product.id,
-      name: product.name,
-      subtitle: product.subtitle,
-      price: product.price,
-      color: selectedColor,
-      size: selectedSize,
-      image: selectedColor === 'white' ? product.images.white : product.images.black,
-      quantity: 1,
-    })
+    alert(`已加入購物車：${product.name} (${selectedColor.toUpperCase()} / ${selectedSize})`)
     onClose()
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/70 backdrop-blur-sm">
-      <div className="relative w-full max-w-3xl overflow-hidden rounded-none border border-ink/20 bg-cream p-6 shadow-2xl md:p-8">
+      <div className="relative w-full max-w-3xl overflow-hidden border border-ink/20 bg-cream p-6 shadow-2xl md:p-8">
         <button
           onClick={onClose}
           type="button"
@@ -80,11 +68,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
               <div className="mt-4 flex items-baseline gap-3">
                 <span className="font-mono text-2xl font-bold text-ink">
-                  NT\$ {product.price.toLocaleString()}
+                  NT$ {product.price.toLocaleString()}
                 </span>
                 {isSale && (
                   <span className="font-mono text-sm text-red-600/70 line-through">
-                    NT\$ {product.originalPrice?.toLocaleString()}
+                    NT$ {product.originalPrice?.toLocaleString()}
                   </span>
                 )}
               </div>
