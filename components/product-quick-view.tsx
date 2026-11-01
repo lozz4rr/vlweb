@@ -119,12 +119,12 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
             <p className="text-[11px] font-medium tracking-[0.25em] text-muted-foreground uppercase">
               {product.fit}
             </p>
-            <h2 className="mt-1 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
+            <h2 className="mt-1 font-display font-serif-tc text-3xl font-extrabold tracking-tight md:text-4xl">
               {product.name}
             </h2>
             <p className="font-serif-tc text-sm text-muted-foreground">{product.subtitle}</p>
 
-            {/* 價格區塊：劃掉原價 750，特價 680 */}
+            {/* 價格區塊：劃掉原價 750，特價 680，預購折扣標籤 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
               <span className="font-display text-3xl font-bold text-ink">
                 {formatPrice(product.price)}
@@ -134,8 +134,8 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                   {formatPrice(product.originalPrice)}
                 </span>
               )}
-              <span className="rounded bg-burgundy/10 px-2 py-0.5 text-xs font-semibold text-burgundy">
-                特惠
+              <span className="rounded bg-burgundy/10 px-2.5 py-0.5 text-xs font-semibold tracking-wider text-burgundy">
+                預購折扣
               </span>
             </div>
 
@@ -144,7 +144,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               {product.description}
             </div>
 
-            {/* 顏色選項：改為 COLOR 衣服顏色 */}
+            {/* 顏色選項 */}
             <div className="border-t border-border/60 py-4">
               <div className="flex items-center justify-between text-xs tracking-[0.2em]">
                 <span className="font-medium">COLOR 衣服顏色</span>
