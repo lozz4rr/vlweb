@@ -1,61 +1,46 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import { Barlow_Condensed, Instrument_Serif, Noto_Serif_TC } from 'next/font/google'
-import { CartProvider } from '@/components/cart-context'
 import './globals.css'
+import { CartProvider } from '@/components/cart-context'
 
 const barlowCondensed = Barlow_Condensed({
+  weight: ['400', '600', '700', '800'],
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
   variable: '--font-barlow-condensed',
+  display: 'swap',
 })
 
 const instrumentSerif = Instrument_Serif({
+  weight: ['400'],
   subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
   variable: '--font-instrument-serif',
+  display: 'swap',
 })
 
-const notoSerifTc = Noto_Serif_TC({
-  subsets: ['latin'],
+const notoSerifTC = Noto_Serif_TC({
   weight: ['400', '600', '700'],
+  subsets: ['latin'],
   variable: '--font-serif-tc',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'VL — Visual Legacy | Made today. Tradition tomorrow.',
-  description:
-    '將傳統帶入流行，看見排灣的美。VL — Visual Legacy is an independent streetwear label from Kaohsiung, Taiwan, reinterpreting Paiwan graphics through screen-printed tees.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
-
-export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#efe8da',
+  title: 'VL — Visual Legacy',
+  description: 'Made to Be Seen. Inspired by roots, crafted for the streets.',
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html
-      lang="zh-Hant"
-      className={`${barlowCondensed.variable} ${instrumentSerif.variable} ${notoSerifTc.variable}`}
+      lang="zh-TW"
+      className={`${barlowCondensed.variable} ${instrumentSerif.variable} ${notoSerifTC.variable}`}
     >
-      <body className="antialiased">
+      <body className="bg-background text-foreground font-sans antialiased">
         <CartProvider>{children}</CartProvider>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
