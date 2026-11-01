@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Barlow_Condensed, Instrument_Serif, Noto_Serif_TC } from 'next/font/google'
+import { Barlow_Condensed, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
 
@@ -17,13 +17,6 @@ const instrumentSerif = Instrument_Serif({
   display: 'swap',
 })
 
-const notoSerifTC = Noto_Serif_TC({
-  weight: ['400', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-serif-tc',
-  display: 'swap',
-})
-
 export const metadata: Metadata = {
   title: 'VL — Visual Legacy',
   description: 'Made to Be Seen. Inspired by roots, crafted for the streets.',
@@ -37,8 +30,16 @@ export default function RootLayout({
   return (
     <html
       lang="zh-TW"
-      className={`${barlowCondensed.variable} ${instrumentSerif.variable} ${notoSerifTC.variable}`}
+      className={`${barlowCondensed.variable} ${instrumentSerif.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="bg-background text-foreground font-sans antialiased">
         <CartProvider>{children}</CartProvider>
       </body>
