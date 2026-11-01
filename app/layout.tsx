@@ -1,7 +1,6 @@
-import { Noto_Serif_TC } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Barlow_Condensed, Instrument_Serif } from 'next/font/google'
+import { Barlow_Condensed, Instrument_Serif, Noto_Serif_TC } from 'next/font/google'
 import { CartProvider } from '@/components/cart-context'
 import './globals.css'
 
@@ -16,6 +15,12 @@ const instrumentSerif = Instrument_Serif({
   weight: '400',
   style: ['normal', 'italic'],
   variable: '--font-instrument-serif',
+})
+
+const notoSerifTc = Noto_Serif_TC({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-serif-tc',
 })
 
 export const metadata: Metadata = {
@@ -46,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-Hant"
-      className={`${barlowCondensed.variable} ${instrumentSerif.variable}`}
+      className={`${barlowCondensed.variable} ${instrumentSerif.variable} ${notoSerifTc.variable}`}
     >
       <body className="antialiased">
         <CartProvider>{children}</CartProvider>
