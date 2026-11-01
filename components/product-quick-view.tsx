@@ -116,9 +116,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            <p className="text-[11px] font-medium tracking-[0.25em] text-muted-foreground uppercase">
-              {product.fit}
-            </p>
             <h2 className="mt-1 font-display font-serif-tc text-3xl font-extrabold tracking-tight md:text-4xl">
               {product.name}
             </h2>
