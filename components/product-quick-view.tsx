@@ -50,7 +50,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     setTimeout(() => setAdded(false), 2000)
   }
 
-  // 將商品名稱以斜線拆開，讓中文部分能單獨縮小對齊
+  // 將商品名稱以斜線拆開，讓中文部分能單獨微調
   const [englishName, chineseName] = product.name.includes('/')
     ? product.name.split('/').map((s) => s.trim())
     : [product.name, '']
@@ -121,11 +121,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：英文大字，斜線與中文縮小貼齊底部 */}
+            {/* 標題：英文維持大粗體，中文與斜線帶入 Noto Serif TC 並拉高至 700 粗度與英文切齊 */}
             <h2 className="mt-1 flex flex-wrap items-baseline gap-1 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
               <span>{englishName}</span>
               {chineseName && (
-                <span className="text-2xl font-bold md:text-3xl">
+                <span className="font-serif-tc text-2xl font-bold tracking-normal text-ink md:text-3xl">
                   ／{chineseName}
                 </span>
               )}
@@ -147,8 +147,8 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案：內文保留思源宋體 */}
-            <div className="py-5 font-serif-tc text-sm leading-relaxed text-ink/80 whitespace-pre-line">
+            {/* 說明文案：改用 text-ink、字體稍微加強、行距舒展，突顯思源宋體質感 */}
+            <div className="py-5 font-serif-tc text-[15px] font-medium leading-relaxed text-ink/90 whitespace-pre-line">
               {product.description}
             </div>
 
