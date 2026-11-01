@@ -8,14 +8,14 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
         <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
           
-          {/* 左側：大型 VISUAL LEGACY 分兩行，適度拉開字距 */}
-          <div className="select-none lg:col-span-7 flex flex-col justify-between">
-            <div className="font-display font-extrabold uppercase leading-[0.82] tracking-[0.04em] text-cream/90 text-[clamp(3.8rem,10vw,7.8rem)]">
+          {/* 左側：最一開始的透明浮水印質感 (text-cream/15)，分兩行並適度拉開字距 */}
+          <div className="select-none pointer-events-none lg:col-span-7 flex flex-col justify-between">
+            <div className="font-display font-extrabold uppercase leading-[0.82] tracking-[0.04em] text-cream/15 text-[clamp(4.2rem,11vw,8.5rem)]">
               <div>VISUAL</div>
-              <div className="mt-2 tracking-[0.08em]">LEGACY</div>
+              <div className="mt-2 tracking-[0.09em]">LEGACY</div>
             </div>
             
-            {/* 桌面端靠左下方顯示微型標註 */}
+            {/* 桌面端左下方微型版權標註 */}
             <div className="hidden lg:block pt-8 text-[10px] tracking-[0.25em] text-cream/40">
               © {new Date().getFullYear()} VL — VISUAL LEGACY. ALL RIGHTS RESERVED.
             </div>
