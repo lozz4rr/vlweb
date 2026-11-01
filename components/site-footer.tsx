@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 
-export function Footer() {
+export function SiteFooter() {
   return (
     <footer className="border-t border-border/20 bg-ink text-cream">
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
-        {/* 只保留 HELP 與 VL，置中排列並刪除第三個項目 */}
+        {/* 只保留 HELP 與 VL，移至畫面置中排列 */}
         <div className="flex flex-wrap justify-center gap-16 md:gap-28 text-center sm:text-left">
           {/* HELP */}
           <div>
@@ -64,7 +64,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* 底部大型 VISUAL LEGACY 字樣與版權 */}
+        {/* 底部大型 VISUAL LEGACY 字樣與版權聲明 */}
         <div className="mt-16 pt-12 border-t border-cream/10">
           <div className="overflow-hidden">
             <p className="font-display text-[clamp(2.5rem,11vw,9rem)] font-extrabold uppercase leading-[0.8] tracking-tight text-cream/15 text-center select-none">
