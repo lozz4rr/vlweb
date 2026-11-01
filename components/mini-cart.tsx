@@ -28,7 +28,7 @@ export function MiniCart() {
   const currentShipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE
   const finalTotal = subtotal + currentShipping
 
-     // 點擊結帳：將動態品項與即時計算金額傳遞至 Tally 隱藏欄位
+  // 點擊結帳：將動態品項與即時計算金額傳遞至 Tally 隱藏欄位
   const handleCheckout = () => {
     const itemsDescription = items
       .map((item) => `${item.product.name} (${item.color}/${item.size}) x${item.quantity}`)
@@ -44,6 +44,8 @@ export function MiniCart() {
     const tallyUrl = `https://tally.so/r/o9EMxN?${params.toString()}`
     window.open(tallyUrl, '_blank')
   }
+
+  return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex justify-end">
