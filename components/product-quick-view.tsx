@@ -121,11 +121,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：英文大字，斜線與中文縮小貼齊 */}
-            <h2 className="mt-1 flex flex-wrap items-baseline gap-1.5 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
+            {/* 標題：英文大字，斜線與中文縮小貼齊底部 */}
+            <h2 className="mt-1 flex flex-wrap items-baseline gap-1 font-display text-3xl font-extrabold tracking-tight md:text-4xl">
               <span>{englishName}</span>
               {chineseName && (
-                <span className="font-serif-tc text-xl font-normal text-ink/90 md:text-2xl">
+                <span className="text-2xl font-bold md:text-3xl">
                   ／{chineseName}
                 </span>
               )}
@@ -147,7 +147,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案 */}
+            {/* 說明文案：內文保留思源宋體 */}
             <div className="py-5 font-serif-tc text-sm leading-relaxed text-ink/80 whitespace-pre-line">
               {product.description}
             </div>
