@@ -41,7 +41,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/70 backdrop-blur-sm">
       <div className="relative w-full max-w-3xl overflow-hidden rounded-none border border-ink/20 bg-cream p-6 shadow-2xl md:p-8">
-        {/* 關閉按鈕 */}
         <button
           onClick={onClose}
           type="button"
@@ -52,7 +51,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
         </button>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {/* 左側：商品圖片 + 紅色折扣角標 */}
           <div className="relative aspect-square w-full overflow-hidden bg-black/5">
             <Image
               src={selectedColor === 'white' ? product.images.white : product.images.black}
@@ -61,7 +59,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            {/* 折扣維持醒目紅色 */}
             {isSale && (
               <span className="absolute left-3 top-3 bg-red-600 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider text-white">
                 -{discountPercent}% OFF
@@ -69,7 +66,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
             )}
           </div>
 
-          {/* 右側：商品規格與購買 */}
           <div className="flex flex-col justify-between">
             <div>
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
@@ -82,19 +78,17 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                 {product.subtitle}
               </p>
 
-              {/* 價格區塊：特價保持紅色 */}
               <div className="mt-4 flex items-baseline gap-3">
                 <span className="font-mono text-2xl font-bold text-ink">
-                  NT$ {product.price.toLocaleString()}
+                  NT\$ {product.price.toLocaleString()}
                 </span>
                 {isSale && (
                   <span className="font-mono text-sm text-red-600/70 line-through">
-                    NT$ {product.originalPrice?.toLocaleString()}
+                    NT\$ {product.originalPrice?.toLocaleString()}
                   </span>
                 )}
               </div>
 
-              {/* 顏色選擇 */}
               <div className="mt-6">
                 <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
                   COLOR: <span className="font-bold text-ink uppercase">{selectedColor}</span>
@@ -118,7 +112,6 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                 </div>
               </div>
 
-              {/* 尺寸選擇 */}
               <div className="mt-6">
                 <span className="font-mono text-xs uppercase tracking-wider text-ink/70">
                   SIZE
@@ -142,11 +135,10 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </div>
             </div>
 
-            {/* 加入購物車按鈕：向日葵金黃 #FCBF49 實心大按鈕 */}
             <button
               onClick={handleAddToCart}
               type="button"
-              className="mt-8 flex w-full items-center justify-center bg-[#FCBF49] py-3.5 font-mono text-xs font-bold tracking-[0.25em] text-ink transition-transform duration-150 hover:bg-[#e5ac42] active:scale-[0.99]"
+              className="mt-8 flex w-full items-center justify-center bg-ink py-3.5 font-mono text-xs font-bold tracking-[0.25em] text-cream transition-transform duration-150 hover:bg-ink/90 active:scale-[0.99]"
             >
               ADD TO CART
             </button>
