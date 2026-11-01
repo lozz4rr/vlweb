@@ -11,8 +11,6 @@ const filters: { label: string; value: GraphicTag | 'all' }[] = [
   { label: 'ALL', value: 'all' },
   { label: 'VULUNG', value: 'vulung' },
   { label: 'KADJIADJI', value: 'kadjiadji' },
-  { label: 'SUN', value: 'sun' },
-  { label: 'LOGO', value: 'logo' },
 ]
 
 type SortKey = 'newest' | 'price-asc' | 'price-desc' | 'popular'
@@ -59,7 +57,7 @@ export function NewDrop() {
             NEW DROP
           </h2>
           <p className="mt-3 font-serif text-xl italic text-muted-foreground">
-            Four tees. Four stories. <span className="font-serif-tc not-italic text-base">四件T恤，四個故事。</span>
+            Two tees. Two stories. <span className="font-serif-tc not-italic text-base">兩件T恤，兩個故事。</span>
           </p>
         </motion.div>
 
@@ -106,7 +104,7 @@ export function NewDrop() {
         ))}
       </div>
 
-      <motion.div layout className="mt-12 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+      <motion.div layout className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2">
         <AnimatePresence mode="popLayout">
           {visible.map((product, i) => (
             <ProductCard key={product.id} product={product} index={i} onView={setActive} />
