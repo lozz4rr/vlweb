@@ -62,4 +62,46 @@ export function NewDrop() {
             >
               <option value="newest">Newest</option>
               <option value="popular">Popular</option>
-              <option value="price-asc">Price: Low to High</option
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-2 border-b border-border/60 pb-6">
+          {filterTabs.map((tab) => {
+            const active = activeFilter === tab.value
+            return (
+              <button
+                key={tab.value}
+                type="button"
+                onClick={() => setActiveFilter(tab.value)}
+                className={cn(
+                  'px-4 py-1.5 text-xs font-semibold tracking-[0.2em] transition-colors',
+                  active
+                    ? 'bg-ink text-cream'
+                    : 'border border-border bg-transparent text-ink hover:border-ink',
+                )}
+              >
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
+          {filteredProducts.map((product, index) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={index}
+              onView={(p) => setSelectedProduct(p)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <ProductQuickView product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+    </section>
+  )
+}
