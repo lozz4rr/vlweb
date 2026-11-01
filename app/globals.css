@@ -43,18 +43,16 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-}
-
 :root {
-  /* 主背景改為向日葵金黃 */
-  --cream: #FCBF49;
+  /* 恢復原本溫潤的米白底 */
+  --cream: #efe8da;
   
-  /* 主要文字、線條、邊框全面改為深午夜藍 */
-  --ink: #0A233A;
+  /* 恢復原本的墨黑色 */
+  --ink: #1e1c1a;
   
-  /* 次要文字與邊框透明度（深藍調） */
-  --border: rgba(10, 35, 58, 0.18);
-  --muted-foreground: rgba(10, 35, 58, 0.65);
+  /* 恢復原本的細邊框與次要文字顏色 */
+  --border: rgba(30, 28, 26, 0.15);
+  --muted-foreground: rgba(30, 28, 26, 0.65);
 }
 
 @layer base {
