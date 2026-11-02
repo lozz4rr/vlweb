@@ -47,7 +47,7 @@ export function Lookbook() {
 
       <div className="mt-12 flex justify-center">
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/vl_works/"
           target="_blank"
           rel="noreferrer"
           className="border border-ink px-8 py-4 text-xs font-medium tracking-[0.25em] transition-colors duration-500 hover:bg-ink hover:text-cream"
