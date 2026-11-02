@@ -31,10 +31,10 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 右側：改為底部對齊（justify-end）與增加頂部邊距，讓整體視覺重心往下沉 */}
-            <div className="flex flex-col justify-end gap-10 pt-4 lg:col-span-5 lg:pl-6 lg:pt-16">
-              {/* HELP 區塊：三欄等寬平均分配 */}
-              <div>
+            {/* 右側：選單與品牌理念（整體維持原有排列間距） */}
+            <div className="flex flex-col justify-start gap-10 lg:col-span-5 lg:pl-6">
+              {/* HELP 區塊：單獨加上頂部間距往下靠 */}
+              <div className="pt-6 lg:pt-12">
                 <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#efe8da]/40">
                   HELP
                 </span>
@@ -69,7 +69,7 @@ export function SiteFooter() {
                 </div>
               </div>
 
-              {/* 品牌理念說明 */}
+              {/* 品牌理念說明（回到原位） */}
               <div className="pt-2">
                 <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#efe8da]/40">
                   VL — 2026
