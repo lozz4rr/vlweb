@@ -10,6 +10,18 @@ import { formatPrice } from '@/lib/products'
 const SHIPPING_FEE = 50 // 超商運費 50 元
 const FREE_SHIPPING_THRESHOLD = 2000
 
+// 強制顏色校正函式：百步蛇一律 Black 黑，蝴蝶一律 White 白
+function getCorrectColor(productId: string, productName: string, fallbackColor: string): string {
+  const checkStr = `${productId} ${productName}`.toLowerCase()
+  if (checkStr.includes('vulung') || checkStr.includes('百步蛇')) {
+    return 'Black 黑'
+  }
+  if (checkStr.includes('kadjiadji') || checkStr.includes('蝴蝶')) {
+    return 'White 白'
+  }
+  return fallbackColor
+}
+
 export function MiniCart() {
   const { items, isOpen, closeCart, subtotal, count, lastAddedKey, updateQuantity, removeItem } = useCart()
 
@@ -31,7 +43,10 @@ export function MiniCart() {
   // 點擊結帳：將動態品項與即時計算金額傳遞至 Tally 隱藏欄位
   const handleCheckout = () => {
     const itemsDescription = items
-      .map((item) => `${item.product.name} (${item.color}/${item.size}) x${item.quantity}`)
+      .map((item) => {
+        const correctColor = getCorrectColor(item.product.id, item.product.name, item.color)
+        return `${item.product.name} (${correctColor}/${item.size}) x${item.quantity}`
+      })
       .join(' ; ')
 
     const totalAmount = `NT$ ${finalTotal.toLocaleString()} 元`
@@ -104,64 +119,68 @@ export function MiniCart() {
               <>
                 {/* 購物清單 */}
                 <ul className="flex-1 divide-y divide-border overflow-y-auto px-6">
-                  {items.map((item) => (
-                    <motion.li
-                      layout
-                      key={item.key}
-                      initial={{ opacity: 0, x: 24 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="flex gap-4 py-5"
-                    >
-                      <div className="relative aspect-[4/5] w-24 shrink-0 overflow-hidden bg-secondary">
-                        <Image
-                          src={item.product.images.front || '/placeholder.svg'}
-                          alt={item.product.name}
-                          fill
-                          sizes="96px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col">
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <p className="font-display text-lg font-bold leading-tight">{item.product.name}</p>
-                            <p className="text-sm text-muted-foreground">{item.product.subtitle}</p>
-                          </div>
-                          <p className="text-sm font-medium">{formatPrice(item.product.price * item.quantity)}</p>
+                  {items.map((item) => {
+                    const itemDisplayColor = getCorrectColor(item.product.id, item.product.name, item.color)
+
+                    return (
+                      <motion.li
+                        layout
+                        key={item.key}
+                        initial={{ opacity: 0, x: 24 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                        className="flex gap-4 py-5"
+                      >
+                        <div className="relative aspect-[4/5] w-24 shrink-0 overflow-hidden bg-secondary">
+                          <Image
+                            src={item.product.images.front || '/placeholder.svg'}
+                            alt={item.product.name}
+                            fill
+                            sizes="96px"
+                            className="object-cover"
+                          />
                         </div>
-                        <p className="mt-1 text-xs tracking-wide text-muted-foreground">
-                          印色 {item.color} / {item.size}
-                        </p>
-                        <div className="mt-auto flex items-center justify-between pt-3">
-                          <div className="flex items-center border border-border">
+                        <div className="flex flex-1 flex-col">
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <p className="font-display text-lg font-bold leading-tight">{item.product.name}</p>
+                              <p className="text-sm text-muted-foreground">{item.product.subtitle}</p>
+                            </div>
+                            <p className="text-sm font-medium">{formatPrice(item.product.price * item.quantity)}</p>
+                          </div>
+                          <p className="mt-1 text-xs tracking-wide text-muted-foreground">
+                            印色 {itemDisplayColor} / {item.size}
+                          </p>
+                          <div className="mt-auto flex items-center justify-between pt-3">
+                            <div className="flex items-center border border-border">
+                              <button
+                                type="button"
+                                className="flex size-8 items-center justify-center"
+                                onClick={() => updateQuantity(item.key, item.quantity - 1)}
+                              >
+                                <Minus className="size-3" />
+                              </button>
+                              <span className="w-8 text-center text-sm">{item.quantity}</span>
+                              <button
+                                type="button"
+                                className="flex size-8 items-center justify-center"
+                                onClick={() => updateQuantity(item.key, item.quantity + 1)}
+                              >
+                                <Plus className="size-3" />
+                              </button>
+                            </div>
                             <button
                               type="button"
-                              className="flex size-8 items-center justify-center"
-                              onClick={() => updateQuantity(item.key, item.quantity - 1)}
+                              onClick={() => removeItem(item.key)}
+                              className="text-xs text-muted-foreground underline-offset-4 hover:underline"
                             >
-                              <Minus className="size-3" />
-                            </button>
-                            <span className="w-8 text-center text-sm">{item.quantity}</span>
-                            <button
-                              type="button"
-                              className="flex size-8 items-center justify-center"
-                              onClick={() => updateQuantity(item.key, item.quantity + 1)}
-                            >
-                              <Plus className="size-3" />
+                              Remove
                             </button>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => removeItem(item.key)}
-                            className="text-xs text-muted-foreground underline-offset-4 hover:underline"
-                          >
-                            Remove
-                          </button>
                         </div>
-                      </div>
-                    </motion.li>
-                  ))}
+                      </motion.li>
+                    )
+                  })}
                 </ul>
 
                 {/* 底部金額計算與 CHECKOUT 按鈕 */}
