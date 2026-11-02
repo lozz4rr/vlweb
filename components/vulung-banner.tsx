@@ -39,19 +39,15 @@ export function VulungBanner() {
             VULUNG
           </h2>
           <p className="mt-3 font-serif-tc text-xl tracking-[0.2em] text-cream/80">百步蛇</p>
+
           <p className="mt-8 font-serif text-2xl italic leading-snug md:text-3xl">
             Guardian of ancestors. Symbol of the land we come from.
           </p>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-cream/70">
-            In Paiwan culture, Vulung watches over the family and the land. We redraw its patterns with retro
-            American graphic language — so the guardian travels with you, everyday.
+
+          {/* 已改為思源宋體中文故事文案，並優化行距排版 */}
+          <p className="mt-6 font-serif-tc text-sm md:text-base leading-relaxed tracking-wider text-cream/85">
+            相傳，太陽在北大武山留下兩顆卵，由百步蛇守護，直到孕育出排灣族的始祖。百步蛇與太陽的故事，承載著族人對祖先的敬意，也連結著世代相傳的文化記憶。
           </p>
-          <a
-            href="#new-drop"
-            className="mt-10 inline-block border border-cream px-8 py-4 text-xs font-medium tracking-[0.25em] transition-colors duration-500 hover:bg-cream hover:text-ink"
-          >
-            SHOP VULUNG COLLECTION →
-          </a>
         </motion.div>
       </div>
     </section>
