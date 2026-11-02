@@ -50,11 +50,19 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
   if (!product) return null
 
-  // 固定採用預設顏色名稱以順暢寫入購物車
-  const defaultColorName = product.colors[0]?.name ?? 'Standard'
+  // 百步蛇強制綁定 Black 黑，蝴蝶強制綁定 White 白
+  const checkKey = `${product.id} ${product.name}`.toLowerCase()
+  const defaultColorName =
+    checkKey.includes('vulung') || checkKey.includes('百步蛇')
+      ? 'Black 黑'
+      : checkKey.includes('kadjiadji') || checkKey.includes('蝴蝶')
+      ? 'White 白'
+      : product.colors[0]?.name ?? 'Standard'
+
   const currentImage = product.images[activeSide] || product.images.front
 
   const handleAddToCart = () => {
+    // 依序傳入：商品實體、顏色名稱、選定尺寸
     addItem(product, defaultColorName, selectedSize)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -126,13 +134,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題 */}
             <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
               {product.name}
             </h2>
             <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
 
-            {/* 價格區塊 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
               <span className="font-display text-3xl font-bold text-ink">
                 {formatPrice(product.price)}
@@ -147,12 +153,11 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案 */}
             <div className="py-5 font-serif-tc text-[15px] leading-relaxed text-ink/85 whitespace-pre-line">
               {product.description}
             </div>
 
-            {/* 尺寸選項：僅「尺寸表」單獨加底線 */}
+            {/* 尺寸選擇 */}
             <div className="border-t border-border/60 py-4">
               <div className="flex items-center justify-between text-xs tracking-[0.2em]">
                 <div className="flex items-center gap-2">
