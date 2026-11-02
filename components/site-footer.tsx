@@ -178,7 +178,7 @@ export function SiteFooter() {
                       rel="noopener noreferrer"
                       className="block w-full border border-[#efe8da]/40 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#efe8da]/90 transition-colors hover:border-[#efe8da] hover:bg-[#efe8da] hover:text-[#1e1c1a]"
                     >
-                      INSTAGRAM 私訊 →
+                      INSTAGRAM →
                     </a>
                   </div>
                 </div>
