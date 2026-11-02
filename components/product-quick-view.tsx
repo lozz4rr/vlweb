@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, X } from 'lucide-react'
 import { useCart } from '@/components/cart-context'
-import { formatPrice, type Product, type ProductColor } from '@/lib/products'
+import { formatPrice, type Product } from '@/lib/products'
 import { cn } from '@/lib/utils'
 
 interface ProductQuickViewProps {
@@ -15,14 +15,12 @@ interface ProductQuickViewProps {
 
 export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
   const { addItem } = useCart()
-  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null)
   const [selectedSize, setSelectedSize] = useState<string>('M')
   const [activeSide, setActiveSide] = useState<'front' | 'back'>('front')
   const [added, setAdded] = useState(false)
 
   useEffect(() => {
     if (product) {
-      setSelectedColor(product.colors[0] ?? null)
       setSelectedSize(product.sizes[1] ?? product.sizes[0] ?? 'M')
       setActiveSide('front')
       setAdded(false)
@@ -40,12 +38,14 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
     }
   }, [product, onClose])
 
-  if (!product || !selectedColor) return null
+  if (!product) return null
 
+  // 固定採用預設顏色名稱以順暢寫入購物車
+  const defaultColorName = product.colors[0]?.name ?? 'Standard'
   const currentImage = product.images[activeSide] || product.images.front
 
   const handleAddToCart = () => {
-    addItem(product, selectedColor.name, selectedSize)
+    addItem(product, defaultColorName, selectedSize)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -116,13 +116,13 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：採用 font-serif-tc 並加強為 font-bold (700 粗體) */}
+            {/* 標題：採用 font-serif-tc 並加強為 font-bold */}
             <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
               {product.name}
             </h2>
             <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
 
-            {/* 價格區塊 */}
+            {/* 價格區塊：套用淡粉褐底＋深紅字預購折扣徽章 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
               <span className="font-display text-3xl font-bold text-ink">
                 {formatPrice(product.price)}
@@ -132,7 +132,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
                   {formatPrice(product.originalPrice)}
                 </span>
               )}
-              <span className="rounded bg-burgundy/10 px-2.5 py-0.5 text-xs font-semibold tracking-wider text-burgundy">
+              <span className="rounded bg-[#e8d3cb] px-2.5 py-0.5 font-sans text-xs font-medium tracking-wider text-[#7a3528]">
                 預購折扣
               </span>
             </div>
@@ -142,31 +142,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               {product.description}
             </div>
 
-            {/* 顏色選項 */}
-            <div className="border-t border-border/60 py-4">
-              <div className="flex items-center justify-between text-xs tracking-[0.2em]">
-                <span className="font-medium">COLOR 衣服顏色</span>
-                <span className="text-muted-foreground">{selectedColor.name}</span>
-              </div>
-              <div className="mt-3 flex gap-2">
-                {product.colors.map((color) => {
-                  const active = color.name === selectedColor.name
-                  return (
-                    <button
-                      key={color.name}
-                      type="button"
-                      onClick={() => setSelectedColor(color)}
-                      aria-label={color.name}
-                      className={cn(
-                        'size-7 rounded-full border border-border transition-all',
-                        active && 'ring-2 ring-ink ring-offset-2',
-                      )}
-                      style={{ backgroundColor: color.hex }}
-                    />
-                  )
-                })}
-              </div>
-            </div>
+            {/* COLOR 衣服顏色已完全移除 */}
 
             {/* 尺寸選項 */}
             <div className="border-t border-border/60 py-4">
