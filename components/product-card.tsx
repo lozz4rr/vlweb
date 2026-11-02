@@ -60,7 +60,7 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
         </div>
       </div>
 
-      {/* 資訊與價格區塊 */}
+      {/* 資訊與價格區塊（維持原本排版，更新預購折扣徽章樣式，已移除顏色圓點） */}
       <div className="mt-4 flex flex-1 flex-col">
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -73,13 +73,13 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
             <p className="font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
           </div>
 
-          {/* 價格：特價 680、劃掉原價 750、預購折扣標籤 */}
+          {/* 維持原本的垂直排版：預購折扣標籤與特價同行，劃掉原價在下方 */}
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-1.5">
-              <span className="rounded bg-burgundy/10 px-1.5 py-0.5 text-[10px] font-semibold text-burgundy">
+              <span className="rounded bg-[#e8d3cb] px-1.5 py-0.5 text-[10px] font-medium text-[#7a3528]">
                 預購折扣
               </span>
-              <span className="font-display text-base font-bold text-burgundy">
+              <span className="font-display text-base font-bold text-ink">
                 {formatPrice(product.price)}
               </span>
             </div>
@@ -88,19 +88,6 @@ export function ProductCard({ product, index, onView }: ProductCardProps) {
                 {formatPrice(product.originalPrice)}
               </span>
             )}
-          </div>
-        </div>
-
-        {/* 顏色小圓點（右側原本的 Fit 版型文字已完全移除） */}
-        <div className="mt-3 flex items-center pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
-          <div className="flex items-center gap-1.5">
-            {product.colors.map((c) => (
-              <span
-                key={c.name}
-                className="size-2.5 rounded-full border border-border"
-                style={{ backgroundColor: c.hex }}
-              />
-            ))}
           </div>
         </div>
       </div>
