@@ -11,7 +11,6 @@ const graphics = ['VULUNG', 'KADJIADJI', 'SUN', 'HUMAN FIGURE', 'ARCHIVE']
 const links = [
   { label: 'NEW DROP', href: '#new-drop' },
   { label: 'T-SHIRTS', href: '#new-drop' },
-  { label: 'GRAPHICS', href: '#graphics', dropdown: graphics },
   { label: 'ACCESSORIES', href: '#lookbook' },
   { label: 'STORY', href: '#vulung' },
   { label: 'ABOUT VL', href: '#story' },
@@ -75,11 +74,6 @@ export function SiteHeader() {
                       >
                         {link.dropdown.map((item) => (
                           <li key={item}>
-                            <a
-                              href="#graphics"
-                              onClick={() => setDropdownOpen(false)}
-                              className="block px-5 py-2 text-xs font-medium tracking-[0.18em] transition-colors hover:bg-secondary hover:text-burgundy"
-                            >
                               {item}
                             </a>
                           </li>
