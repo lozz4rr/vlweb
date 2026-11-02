@@ -21,12 +21,6 @@ function getProductColor(productId: string, productName: string): string {
   return 'Standard'
 }
 
-function getCleanSize(sizeValue: string, fallbackSize: string = 'M'): string {
-  const validSizes = ['S', 'M', 'L', 'XL', '2XL']
-  const matched = validSizes.find((s) => s.toLowerCase() === (sizeValue || '').trim().toLowerCase())
-  return matched || (validSizes.includes(fallbackSize) ? fallbackSize : 'M')
-}
-
 export function MiniCart() {
   const { items, isOpen, closeCart, subtotal, count, lastAddedKey, updateQuantity, removeItem } = useCart()
 
@@ -49,8 +43,9 @@ export function MiniCart() {
     const itemsDescription = items
       .map((item) => {
         const correctColor = getProductColor(item.product.id, item.product.name)
-        const cleanSize = getCleanSize(item.size, item.product.sizes?.[0] || 'M')
-        return `${item.product.name} (${correctColor} / 尺寸: ${cleanSize}) x${item.quantity}`
+        // 直接取用使用者選取的尺寸 item.size
+        const actualSize = item.size || 'M'
+        return `${item.product.name} (${correctColor} / 尺寸: ${actualSize}) x${item.quantity}`
       })
       .join(' ; ')
 
@@ -121,7 +116,8 @@ export function MiniCart() {
                 <ul className="flex-1 divide-y divide-border overflow-y-auto px-6">
                   {items.map((item) => {
                     const itemDisplayColor = getProductColor(item.product.id, item.product.name)
-                    const cleanSize = getCleanSize(item.size, item.product.sizes?.[0] || 'M')
+                    // 直接取用選定的實際尺寸，不做覆蓋
+                    const itemDisplaySize = item.size || 'M'
 
                     return (
                       <motion.li
@@ -152,7 +148,7 @@ export function MiniCart() {
                           
                           {/* 購物車顯示格式：印色 Black 黑 / 尺寸 M */}
                           <p className="mt-1 text-xs tracking-wide text-muted-foreground">
-                            印色 {itemDisplayColor} / 尺寸 {cleanSize}
+                            印色 {itemDisplayColor} / 尺寸 {itemDisplaySize}
                           </p>
                           
                           <div className="mt-auto flex items-center justify-between pt-3">
