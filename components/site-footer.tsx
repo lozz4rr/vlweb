@@ -31,9 +31,9 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* 右側：選單與品牌理念 */}
-            <div className="flex flex-col justify-start gap-10 lg:col-span-5 lg:pl-6">
-              {/* HELP 區塊：移除 VL，三欄等寬平均分配右上空間 */}
+            {/* 右側：改為底部對齊（justify-end）與增加頂部邊距，讓整體視覺重心往下沉 */}
+            <div className="flex flex-col justify-end gap-10 pt-4 lg:col-span-5 lg:pl-6 lg:pt-16">
+              {/* HELP 區塊：三欄等寬平均分配 */}
               <div>
                 <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#efe8da]/40">
                   HELP
@@ -178,7 +178,7 @@ export function SiteFooter() {
                       rel="noopener noreferrer"
                       className="block w-full border border-[#efe8da]/40 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#efe8da]/90 transition-colors hover:border-[#efe8da] hover:bg-[#efe8da] hover:text-[#1e1c1a]"
                     >
-                      INSTAGRAM →
+                      INSTAGRAM 私訊 →
                     </a>
                   </div>
                 </div>
