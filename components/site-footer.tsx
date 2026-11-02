@@ -20,7 +20,7 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-12 md:pt-20">
           <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12 lg:gap-8">
             
-            {/* 左側：兩行大字，徹底解除行高壓迫，乾淨緊貼不重疊 */}
+            {/* 左側：兩行大字 */}
             <div className="pointer-events-none flex select-none flex-col justify-between lg:col-span-7">
               <div className="flex flex-col font-display text-[clamp(4.2rem,12vw,10.5rem)] font-extrabold uppercase leading-none tracking-tight text-[#efe8da]/15">
                 <span className="block">VISUAL</span>
@@ -89,7 +89,7 @@ export function SiteFooter() {
                     </li>
                     <li>
                       <a
-                        href="https://instagram.com"
+                        href="https://www.instagram.com/vl_works/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
@@ -196,7 +196,7 @@ export function SiteFooter() {
                     </button>
                   </div>
 
-                  {/* 動作按鈕區：寄信與 Instagram */}
+                  {/* 動作按鈕區 */}
                   <div className="grid grid-cols-1 gap-2 pt-2 sm:grid-cols-2">
                     <a
                       href="mailto:paiwanlegacy@gmail.com"
@@ -205,7 +205,7 @@ export function SiteFooter() {
                       開啟郵件寄信 →
                     </a>
                     <a
-                      href="https://instagram.com"
+                      href="https://www.instagram.com/vl_works/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block w-full border border-[#efe8da]/40 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#efe8da]/90 transition-colors hover:border-[#efe8da] hover:bg-[#efe8da] hover:text-[#1e1c1a]"
