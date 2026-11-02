@@ -35,7 +35,7 @@ export const products: Product[] = [
     name: 'vulung／百步蛇',
     subtitle: '百步蛇與太陽',
     price: 680,
-    originalPrice: 750,
+    originalPrice: 790,
     isNew: true,
     fit: 'HEAVYWEIGHT BOXY FIT',
     description:
@@ -58,7 +58,7 @@ export const products: Product[] = [
     name: 'kadjiadji／蝴蝶',
     subtitle: '蝴蝶',
     price: 680,
-    originalPrice: 750,
+    originalPrice: 790,
     isNew: true,
     fit: 'RELAXED FIT',
     description:
