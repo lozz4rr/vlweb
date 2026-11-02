@@ -52,14 +52,11 @@ export function NewDrop() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* 已改為 DROP 001 */}
           <p className="text-[11px] font-medium tracking-[0.35em] text-burgundy">DROP 001</p>
           <h2 className="mt-3 font-display text-6xl font-extrabold leading-none tracking-tight md:text-8xl">
             NEW DROP
           </h2>
-          <p className="mt-3 font-serif text-xl italic text-muted-foreground">
-            Two tees. Two stories. <span className="font-serif-tc not-italic text-base">兩件T恤，兩個故事。</span>
-          </p>
+          {/* 原本的 "Two tees. Two stories. 兩件T恤，兩個故事。" 已完全移除 */}
         </motion.div>
 
         <label className="flex items-center gap-3 text-xs tracking-[0.2em]">
