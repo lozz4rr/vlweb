@@ -181,8 +181,10 @@ export function SiteFooter() {
                 <h3 className="mt-1 font-display text-2xl font-bold tracking-wide">CONTACT US</h3>
                 <div className="mt-6 space-y-4 text-sm">
                   <p className="text-sm leading-relaxed text-[#efe8da]/80">
-                    若有訂單進度、尺寸建議或品牌合作需求，歡迎來信與我們聯繫：
+                    若有訂單相關疑問或其他需求，歡迎來信或IG與我們聯繫：
                   </p>
+                  
+                  {/* Email 欄位與複製按鈕 */}
                   <div className="flex items-center justify-between border border-[#efe8da]/20 bg-[#252220] px-4 py-3">
                     <span className="font-mono text-xs text-[#efe8da] sm:text-sm">paiwanlegacy@gmail.com</span>
                     <button
@@ -193,12 +195,22 @@ export function SiteFooter() {
                       {copied ? 'COPIED!' : 'COPY'}
                     </button>
                   </div>
-                  <div className="pt-2">
+
+                  {/* 動作按鈕區：寄信與 Instagram */}
+                  <div className="grid grid-cols-1 gap-2 pt-2 sm:grid-cols-2">
                     <a
-                      href="mailto:paiwanlegacy@gmail.com?subject=VL 品牌諮詢 / 訂單詢問"
+                      href="mailto:paiwanlegacy@gmail.com"
                       className="block w-full border border-[#efe8da] py-3 text-center font-mono text-xs uppercase tracking-[0.2em] transition-colors hover:bg-[#efe8da] hover:text-[#1e1c1a]"
                     >
                       開啟郵件寄信 →
+                    </a>
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full border border-[#efe8da]/40 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#efe8da]/90 transition-colors hover:border-[#efe8da] hover:bg-[#efe8da] hover:text-[#1e1c1a]"
+                    >
+                      INSTAGRAM 私訊 →
                     </a>
                   </div>
                 </div>
