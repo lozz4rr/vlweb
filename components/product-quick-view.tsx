@@ -152,17 +152,19 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               {product.description}
             </div>
 
-            {/* 尺寸選項：點擊「SIZE 尺寸」開啟尺寸表 */}
+            {/* 尺寸選項：僅「尺寸表」單獨加底線 */}
             <div className="border-t border-border/60 py-4">
               <div className="flex items-center justify-between text-xs tracking-[0.2em]">
-                <button
-                  type="button"
-                  onClick={() => setShowSizeGuide(true)}
-                  className="group flex items-center gap-1.5 font-medium underline underline-offset-4 decoration-border/80 transition-colors hover:text-burgundy hover:decoration-burgundy"
-                >
-                  <span>SIZE 尺寸</span>
-                  <span className="text-[10px] text-muted-foreground group-hover:text-burgundy">(尺寸表 ↗)</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">SIZE 尺寸</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowSizeGuide(true)}
+                    className="underline underline-offset-4 decoration-border/90 text-muted-foreground transition-colors hover:text-burgundy hover:decoration-burgundy text-[11px]"
+                  >
+                    尺寸表
+                  </button>
+                </div>
                 <span className="text-muted-foreground">{selectedSize}</span>
               </div>
               <div className="mt-3 grid grid-cols-4 gap-2">
@@ -207,7 +209,7 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
             </button>
           </div>
 
-          {/* 尺寸表彈窗（層級覆蓋在 quick-view 內容之上） */}
+          {/* 尺寸表彈窗 */}
           {showSizeGuide && (
             <motion.div
               initial={{ opacity: 0 }}
