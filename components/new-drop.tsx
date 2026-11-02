@@ -52,7 +52,8 @@ export function NewDrop() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="text-[11px] font-medium tracking-[0.35em] text-burgundy">DROP 02</p>
+          {/* 已改為 DROP 001 */}
+          <p className="text-[11px] font-medium tracking-[0.35em] text-burgundy">DROP 001</p>
           <h2 className="mt-3 font-display text-6xl font-extrabold leading-none tracking-tight md:text-8xl">
             NEW DROP
           </h2>
