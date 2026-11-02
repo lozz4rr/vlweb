@@ -54,14 +54,6 @@ export function Hero() {
         >
           Made today. Tradition tomorrow.
         </motion.p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 1 }}
-          className="mt-3 font-serif-tc text-sm tracking-[0.2em] text-cream/80 md:text-base"
-        >
-          將傳統帶入流行，看見排灣的美。
-        </motion.p>
         <motion.a
           href="#new-drop"
           initial={{ opacity: 0, y: 12 }}
