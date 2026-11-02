@@ -5,10 +5,10 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 const looks = [
-  { src: '/images/look-1.png', alt: 'Model in an off-white butterfly graphic tee leaning on a weathered wall', className: 'md:col-span-5 md:row-span-2 aspect-[3/4] md:aspect-auto', caption: 'LOOK 01 — KADJIADJI' },
-  { src: '/images/look-2.png', alt: 'Model in a black sun graphic tee on a vintage scooter on a mountain road', className: 'md:col-span-7 aspect-[4/3]', caption: 'LOOK 02 — VULUNG / SUN' },
-  { src: '/images/look-4.png', alt: 'Hands screen printing a snake graphic in the studio', className: 'md:col-span-3 aspect-square', caption: 'IN THE STUDIO' },
-  { src: '/images/look-3.png', alt: 'Two friends in brown and cream logo tees walking past a retro storefront', className: 'md:col-span-4 aspect-[3/4] md:aspect-auto', caption: 'LOOK 03 — VL LOGO' },
+  { src: '/images/look-1.png', alt: 'Model in an off-white butterfly graphic tee leaning on a weathered wall', className: 'md:col-span-5 md:row-span-2 aspect-[3/4] md:aspect-auto', caption: 'LOOK 01' },
+  { src: '/images/look-2.png', alt: 'Model in a black sun graphic tee on a vintage scooter on a mountain road', className: 'md:col-span-7 aspect-[4/3]', caption: 'LOOK 02' },
+  { src: '/images/look-4.png', alt: 'Hands screen printing a snake graphic in the studio', className: 'md:col-span-3 aspect-square', caption: 'LOOK 03' },
+  { src: '/images/look-3.png', alt: 'Two friends in brown and cream logo tees walking past a retro storefront', className: 'md:col-span-4 aspect-[3/4] md:aspect-auto', caption: 'LOOK 04' },
 ]
 
 export function Lookbook() {
@@ -19,7 +19,6 @@ export function Lookbook() {
           <p className="text-[11px] font-medium tracking-[0.35em] text-burgundy">AUTUMN 2026</p>
           <h2 className="mt-3 font-display text-5xl font-extrabold leading-none tracking-tight md:text-7xl">LOOKBOOK</h2>
         </div>
-        {/* 原本的 "Shot on film in Pingtung & Kaohsiung." 已完全刪除 */}
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-[auto_auto] md:gap-6">
