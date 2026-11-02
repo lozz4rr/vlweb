@@ -2,16 +2,13 @@
 
 import { useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
-import { ChevronDown, Menu, ShoppingBag, X } from 'lucide-react'
+import { Menu, ShoppingBag, X } from 'lucide-react'
 import { useCart } from '@/components/cart-context'
 import { cn } from '@/lib/utils'
-
-const graphics = ['VULUNG', 'KADJIADJI', 'SUN', 'HUMAN FIGURE', 'ARCHIVE']
 
 const links = [
   { label: 'NEW DROP', href: '#new-drop' },
   { label: 'T-SHIRTS', href: '#new-drop' },
-  { label: 'GRAPHICS', href: '#graphics', dropdown: graphics },
   { label: 'ACCESSORIES', href: '#lookbook' },
   { label: 'STORY', href: '#vulung' },
   { label: 'ABOUT VL', href: '#story' },
@@ -21,7 +18,6 @@ export function SiteHeader() {
   const { scrollY } = useScroll()
   const [solid, setSolid] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const { count, openCart } = useCart()
 
   useMotionValueEvent(scrollY, 'change', (y) => setSolid(y > 40))
@@ -43,62 +39,16 @@ export function SiteHeader() {
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-8">
-            {links.map((link) =>
-              link.dropdown ? (
-                <li
-                  key={link.label}
-                  className="relative"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
+            {links.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  className="relative text-xs font-medium tracking-[0.18em] after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-500 hover:after:w-full"
                 >
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 text-xs font-medium tracking-[0.18em]"
-                    aria-expanded={dropdownOpen}
-                    aria-haspopup="true"
-                    onClick={() => setDropdownOpen((v) => !v)}
-                  >
-                    {link.label}
-                    <ChevronDown
-                      className={cn('size-3.5 transition-transform duration-300', dropdownOpen && 'rotate-180')}
-                      aria-hidden
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.ul
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
-                        className="absolute left-1/2 top-full mt-3 w-52 -translate-x-1/2 border border-border bg-cream py-3 text-ink shadow-sm"
-                      >
-                        {link.dropdown.map((item) => (
-                          <li key={item}>
-                            <a
-                              href="#graphics"
-                              onClick={() => setDropdownOpen(false)}
-                              className="block px-5 py-2 text-xs font-medium tracking-[0.18em] transition-colors hover:bg-secondary hover:text-burgundy"
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </li>
-              ) : (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="relative text-xs font-medium tracking-[0.18em] after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-500 hover:after:w-full"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ),
-            )}
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
 
@@ -159,21 +109,6 @@ export function SiteHeader() {
                   >
                     {link.label}
                   </a>
-                  {link.dropdown && (
-                    <ul className="flex flex-wrap gap-x-4 gap-y-2 pb-4">
-                      {link.dropdown.map((item) => (
-                        <li key={item}>
-                          <a
-                            href="#graphics"
-                            onClick={() => setMobileOpen(false)}
-                            className="text-xs tracking-[0.18em] text-muted-foreground"
-                          >
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </li>
               ))}
             </ul>
