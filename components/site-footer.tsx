@@ -33,41 +33,39 @@ export function SiteFooter() {
 
             {/* 右側：選單與品牌理念 */}
             <div className="flex flex-col justify-start gap-10 lg:col-span-5 lg:pl-6">
+              {/* HELP 區塊：移除 VL，三欄等寬平均分配右上空間 */}
               <div>
-                {/* HELP（僅保留 Size Guide、Shipping、Contact 三項） */}
-                <div>
-                  <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#efe8da]/40">
-                    HELP
-                  </span>
-                  <ul className="mt-4 space-y-2.5 font-mono text-xs tracking-wider">
-                    <li>
-                      <button
-                        type="button"
-                        onClick={() => setActiveModal('size')}
-                        className="text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
-                      >
-                        Size Guide
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        onClick={() => setActiveModal('shipping')}
-                        className="text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
-                      >
-                        Shipping
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        onClick={() => setActiveModal('contact')}
-                        className="text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
-                      >
-                        Contact
-                      </button>
-                    </li>
-                  </ul>
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#efe8da]/40">
+                  HELP
+                </span>
+                <div className="mt-4 grid grid-cols-3 gap-4 border-b border-[#efe8da]/10 pb-6 font-mono text-xs tracking-wider">
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setActiveModal('size')}
+                      className="text-left text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
+                    >
+                      Size Guide
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setActiveModal('shipping')}
+                      className="text-left text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
+                    >
+                      Shipping
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setActiveModal('contact')}
+                      className="text-left text-[#efe8da]/80 transition-colors hover:text-[#efe8da]"
+                    >
+                      Contact
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -137,7 +135,7 @@ export function SiteFooter() {
                 <div className="mt-6 space-y-4 font-mono text-sm">
                   <div className="border border-[#efe8da]/15 bg-[#252220] p-4">
                     <p className="font-bold text-[#efe8da]">超商取貨（7-11 / 全家）</p>
-                    <p className="mt-1 text-base text-[#d4af37]">運費 NT\$ 50</p>
+                    <p className="mt-1 text-base text-[#d4af37]">運費 NT$ 50</p>
                     <p className="mt-2 text-xs text-[#efe8da]/60">寄出後約 2–3 個工作天送達指定門市。</p>
                   </div>
                 </div>
@@ -178,4 +176,17 @@ export function SiteFooter() {
                       href="https://www.instagram.com/vl_works/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-
+                      className="block w-full border border-[#efe8da]/40 py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#efe8da]/90 transition-colors hover:border-[#efe8da] hover:bg-[#efe8da] hover:text-[#1e1c1a]"
+                    >
+                      INSTAGRAM 私訊 →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
