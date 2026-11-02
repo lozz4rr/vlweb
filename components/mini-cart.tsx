@@ -7,11 +7,10 @@ import { Check, Minus, Plus, X } from 'lucide-react'
 import { useCart } from '@/components/cart-context'
 import { formatPrice } from '@/lib/products'
 
-const SHIPPING_FEE = 50 // 超商運費 50 元
+const SHIPPING_FEE = 50
 const FREE_SHIPPING_THRESHOLD = 2000
 
-// 強制顏色校正函式：百步蛇一律 Black 黑，蝴蝶一律 White 白
-function getCorrectColor(productId: string, productName: string, fallbackColor: string): string {
+function getProductColor(productId: string, productName: string): string {
   const checkStr = `${productId} ${productName}`.toLowerCase()
   if (checkStr.includes('vulung') || checkStr.includes('百步蛇')) {
     return 'Black 黑'
@@ -19,7 +18,13 @@ function getCorrectColor(productId: string, productName: string, fallbackColor: 
   if (checkStr.includes('kadjiadji') || checkStr.includes('蝴蝶')) {
     return 'White 白'
   }
-  return fallbackColor
+  return 'Standard'
+}
+
+function getCleanSize(sizeValue: string, fallbackSize: string = 'M'): string {
+  const validSizes = ['S', 'M', 'L', 'XL', '2XL']
+  const matched = validSizes.find((s) => s.toLowerCase() === (sizeValue || '').trim().toLowerCase())
+  return matched || (validSizes.includes(fallbackSize) ? fallbackSize : 'M')
 }
 
 export function MiniCart() {
@@ -40,19 +45,18 @@ export function MiniCart() {
   const currentShipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE
   const finalTotal = subtotal + currentShipping
 
-  // 點擊結帳：將動態品項與即時計算金額傳遞至 Tally 隱藏欄位
   const handleCheckout = () => {
     const itemsDescription = items
       .map((item) => {
-        const correctColor = getCorrectColor(item.product.id, item.product.name, item.color)
-        return `${item.product.name} (${correctColor}/${item.size}) x${item.quantity}`
+        const correctColor = getProductColor(item.product.id, item.product.name)
+        const cleanSize = getCleanSize(item.size, item.product.sizes?.[0] || 'M')
+        return `${item.product.name} (${correctColor} / 尺寸: ${cleanSize}) x${item.quantity}`
       })
       .join(' ; ')
 
     const totalAmount = `NT$ ${finalTotal.toLocaleString()} 元`
 
     const params = new URLSearchParams()
-    // 傳給 Tally 的變數名稱必須是 items 與 total
     params.set('items', itemsDescription)
     params.set('total', totalAmount)
 
@@ -64,12 +68,9 @@ export function MiniCart() {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex justify-end">
-          {/* 背景黑色遮罩 */}
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={closeCart} />
 
-          {/* 購物車主體 */}
           <div className="relative z-10 flex h-full w-full max-w-md flex-col bg-cream text-ink shadow-2xl">
-            {/* 標題欄 */}
             <div className="flex items-center justify-between border-b border-border px-6 py-5">
               <h2 className="font-display text-2xl font-bold tracking-wide">
                 YOUR BAG <span className="text-muted-foreground">({count})</span>
@@ -117,10 +118,10 @@ export function MiniCart() {
               </div>
             ) : (
               <>
-                {/* 購物清單 */}
                 <ul className="flex-1 divide-y divide-border overflow-y-auto px-6">
                   {items.map((item) => {
-                    const itemDisplayColor = getCorrectColor(item.product.id, item.product.name, item.color)
+                    const itemDisplayColor = getProductColor(item.product.id, item.product.name)
+                    const cleanSize = getCleanSize(item.size, item.product.sizes?.[0] || 'M')
 
                     return (
                       <motion.li
@@ -148,9 +149,12 @@ export function MiniCart() {
                             </div>
                             <p className="text-sm font-medium">{formatPrice(item.product.price * item.quantity)}</p>
                           </div>
+                          
+                          {/* 購物車顯示格式：印色 Black 黑 / 尺寸 M */}
                           <p className="mt-1 text-xs tracking-wide text-muted-foreground">
-                            印色 {itemDisplayColor} / {item.size}
+                            印色 {itemDisplayColor} / 尺寸 {cleanSize}
                           </p>
+                          
                           <div className="mt-auto flex items-center justify-between pt-3">
                             <div className="flex items-center border border-border">
                               <button
@@ -183,7 +187,6 @@ export function MiniCart() {
                   })}
                 </ul>
 
-                {/* 底部金額計算與 CHECKOUT 按鈕 */}
                 <div className="border-t border-border px-6 py-6">
                   <div className="mb-3 space-y-1 text-xs text-muted-foreground">
                     <div className="flex justify-between">
