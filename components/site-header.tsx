@@ -9,9 +9,8 @@ import { cn } from '@/lib/utils'
 const links = [
   { label: 'NEW DROP', href: '#new-drop' },
   { label: 'T-SHIRTS', href: '#new-drop' },
-  { label: 'ACCESSORIES', href: '#lookbook' },
+  { label: 'LOOKBOOK', href: '#lookbook' },
   { label: 'STORY', href: '#vulung' },
-  { label: 'ABOUT VL', href: '#story' },
 ]
 
 export function SiteHeader() {
