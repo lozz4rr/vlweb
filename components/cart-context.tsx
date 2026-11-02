@@ -19,7 +19,7 @@ type CartContextValue = {
   lastAddedKey: string | null
   openCart: () => void
   closeCart: () => void
-  addItem: (product: Product, size: string, color: string) => void
+  addItem: (product: Product, sizeOrColor: string, colorOrSize?: string) => void
   updateQuantity: (key: string, quantity: number) => void
   removeItem: (key: string) => void
 }
@@ -28,12 +28,32 @@ const CartContext = createContext<CartContextValue | null>(null)
 
 const MAX_QUANTITY = 10
 
+// 顏色固定規則
+function resolveColor(product: Product, inputColor?: string): string {
+  const checkStr = `${product.id} ${product.name}`.toLowerCase()
+  if (checkStr.includes('vulung') || checkStr.includes('百步蛇')) return 'Black 黑'
+  if (checkStr.includes('kadjiadji') || checkStr.includes('蝴蝶')) return 'White 白'
+  return inputColor || product.colors[0]?.name || 'Standard'
+}
+
+// 尺寸判斷：檢查是否為標準尺寸
+function resolveSize(arg1: string, arg2?: string): string {
+  const validSizes = ['S', 'M', 'L', 'XL', '2XL']
+  if (validSizes.includes(arg1?.trim().toUpperCase())) return arg1.trim().toUpperCase()
+  if (arg2 && validSizes.includes(arg2.trim().toUpperCase())) return arg2.trim().toUpperCase()
+  return arg1 || 'M'
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [lastAddedKey, setLastAddedKey] = useState<string | null>(null)
 
-  const addItem = useCallback((product: Product, size: string, color: string) => {
+  const addItem = useCallback((product: Product, param1: string, param2?: string) => {
+    // 自動識別哪個參數是尺寸、哪個是顏色，徹底杜絕參數順序相反的錯誤
+    const size = resolveSize(param1, param2)
+    const color = resolveColor(product, param2?.includes('黑') || param2?.includes('白') ? param2 : param1)
+
     const key = `${product.id}-${size}-${color}`
     setItems((prev) => {
       const existing = prev.find((item) => item.key === key)
