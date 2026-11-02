@@ -18,25 +18,35 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
   const [selectedSize, setSelectedSize] = useState<string>('M')
   const [activeSide, setActiveSide] = useState<'front' | 'back'>('front')
   const [added, setAdded] = useState(false)
+  const [showSizeGuide, setShowSizeGuide] = useState(false)
 
   useEffect(() => {
     if (product) {
       setSelectedSize(product.sizes[1] ?? product.sizes[0] ?? 'M')
       setActiveSide('front')
       setAdded(false)
+      setShowSizeGuide(false)
     }
   }, [product])
 
   useEffect(() => {
     if (!product) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (showSizeGuide) {
+          setShowSizeGuide(false)
+        } else {
+          onClose()
+        }
+      }
+    }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
     }
-  }, [product, onClose])
+  }, [product, onClose, showSizeGuide])
 
   if (!product) return null
 
@@ -116,13 +126,13 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
 
           {/* 內容設定區 */}
           <div className="flex flex-1 flex-col overflow-y-auto p-6 md:p-8">
-            {/* 標題：採用 font-serif-tc 並加強為 font-bold */}
+            {/* 標題 */}
             <h2 className="mt-1 font-serif font-serif-tc text-3xl font-bold tracking-tight text-ink md:text-4xl">
               {product.name}
             </h2>
             <p className="mt-1 font-serif-tc text-xs text-muted-foreground">{product.subtitle}</p>
 
-            {/* 價格區塊：套用淡粉褐底＋深紅字預購折扣徽章 */}
+            {/* 價格區塊 */}
             <div className="mt-4 flex items-baseline gap-3 border-b border-border/60 pb-5">
               <span className="font-display text-3xl font-bold text-ink">
                 {formatPrice(product.price)}
@@ -137,17 +147,22 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               </span>
             </div>
 
-            {/* 說明文案：思源宋體 */}
+            {/* 說明文案 */}
             <div className="py-5 font-serif-tc text-[15px] leading-relaxed text-ink/85 whitespace-pre-line">
               {product.description}
             </div>
 
-            {/* COLOR 衣服顏色已完全移除 */}
-
-            {/* 尺寸選項 */}
+            {/* 尺寸選項：點擊「SIZE 尺寸」開啟尺寸表 */}
             <div className="border-t border-border/60 py-4">
               <div className="flex items-center justify-between text-xs tracking-[0.2em]">
-                <span className="font-medium">SIZE 尺寸</span>
+                <button
+                  type="button"
+                  onClick={() => setShowSizeGuide(true)}
+                  className="group flex items-center gap-1.5 font-medium underline underline-offset-4 decoration-border/80 transition-colors hover:text-burgundy hover:decoration-burgundy"
+                >
+                  <span>SIZE 尺寸</span>
+                  <span className="text-[10px] text-muted-foreground group-hover:text-burgundy">(尺寸表 ↗)</span>
+                </button>
                 <span className="text-muted-foreground">{selectedSize}</span>
               </div>
               <div className="mt-3 grid grid-cols-4 gap-2">
@@ -191,6 +206,45 @@ export function ProductQuickView({ product, onClose }: ProductQuickViewProps) {
               )}
             </button>
           </div>
+
+          {/* 尺寸表彈窗（層級覆蓋在 quick-view 內容之上） */}
+          {showSizeGuide && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-30 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+              onClick={() => setShowSizeGuide(false)}
+            >
+              <div
+                className="relative max-h-[85vh] w-full max-w-md overflow-hidden border border-[#efe8da]/20 bg-[#1e1c1a] p-5 text-[#efe8da] shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between pb-3">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#d4af37]">HELP</p>
+                    <h3 className="font-display text-xl font-bold tracking-wide">SIZE GUIDE</h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowSizeGuide(false)}
+                    className="flex size-7 items-center justify-center rounded-full bg-[#efe8da]/10 text-sm text-[#efe8da]/80 transition-colors hover:bg-[#efe8da]/20 hover:text-[#efe8da]"
+                    aria-label="Close size guide"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#efe8da]/10 bg-[#f4efe6]">
+                  <Image
+                    src="/images/size-guide.jpg"
+                    alt="VL Boxy Fit T-Shirt Size Guide"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </AnimatePresence>
