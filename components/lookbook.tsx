@@ -19,7 +19,7 @@ export function Lookbook() {
           <p className="text-[11px] font-medium tracking-[0.35em] text-burgundy">AUTUMN 2026</p>
           <h2 className="mt-3 font-display text-5xl font-extrabold leading-none tracking-tight md:text-7xl">LOOKBOOK</h2>
         </div>
-        <p className="font-serif text-xl italic text-muted-foreground">Shot on film in Pingtung & Kaohsiung.</p>
+        {/* 原本的 "Shot on film in Pingtung & Kaohsiung." 已完全刪除 */}
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-[auto_auto] md:gap-6">
