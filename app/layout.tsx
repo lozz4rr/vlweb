@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, Instrument_Serif } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
 
@@ -42,6 +43,12 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-foreground font-sans antialiased">
         <CartProvider>{children}</CartProvider>
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "7c0257d83ab74e4caa059da4a3e642f2"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
